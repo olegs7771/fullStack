@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken"); //creates token
 
 //Bring in model User
 const User = require("../../models/User");
@@ -79,7 +79,7 @@ router.post("/login", (req, res) => {
         jwt.sign(
           data,
           secretKey.secretOrkey,
-          { expiresIn: 3600 },
+          { expiresIn: "12h" },
           (err, token) => {
             res.json({
               success: true,
