@@ -3,6 +3,7 @@ const router = express.Router();
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken"); //creates token
+const passport = require("passport"); //verifys token
 
 //Bring in model User
 const User = require("../../models/User");
@@ -94,5 +95,16 @@ router.post("/login", (req, res) => {
   });
 });
 
+// @route GET api/users/current // protected route must use passport.authenticate('strategy'....)
+// @desc  Return current user
+// @access Private
+
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({ msg: "Success!" });
+  }
+);
+
 module.exports = router;
-//test
