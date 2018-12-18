@@ -11,7 +11,6 @@ const posts = require("./routes/api/posts");
 const app = express();
 
 //Bring in body-parser
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -29,9 +28,6 @@ mongoose
 
 // passport middleware
 app.use(passport.initialize());
-
-//passport Config strategy
-require("./config/passport").passport;
 
 //routes
 app.use("/api/posts", posts);
