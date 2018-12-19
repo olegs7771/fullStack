@@ -8,6 +8,7 @@ const passport = require("passport"); //verifys token
 
 //Load Validation with Validator
 const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 //Bring in model User
 const User = require("../../models/User");
@@ -65,11 +66,20 @@ router.post("/register", (req, res) => {
   });
 });
 
+//passport Config strategy from(config/passport.js)
+require("../../config/passport")(passport);
+
 // @route POST api/users/login
 // @desc  Login newUser / return JWT Token
 // @access Public
 
 router.post("/login", (req, res) => {
+  // //validation with validateRegisterInput (first line of validation)
+  const { errors, isValid } = validateLoginInput(req.body);
+  if (!isValid) {
+    res.status(400).json(errors);
+  }
+
   //receive body from user request
   const email = req.body.email;
   const password = req.body.password;
@@ -114,9 +124,6 @@ router.post("/login", (req, res) => {
 // @route GET api/users/current
 // @desc  Sending Token / return passport.authenticate()return Credentials
 // @access Private
-
-//passport Config strategy from(config/passport.js)
-require("../../config/passport")(passport);
 
 router.get(
   "/current",
