@@ -8,19 +8,19 @@ module.exports = function validateRegisterInput(data) {
   data.password = !isEmpty(data.password1) ? data.password1 : "";
   data.password = !isEmpty(data.password2) ? data.password2 : "";
 
-  let errors = "";
+  let errors = {};
   if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
-    errors = "Name must contain between 2-30 Characters";
+    errors.name = "Name must contain between 2-30 Characters";
   }
   if (!Validator.isEmail(data.email)) {
-    errors = "Wrong Email Format";
+    errors.email = "Wrong Email Format";
   }
   if (!Validator.isNumeric(data.password1, { no_symbols: true })) {
-    errors = "Please Use only Numbers 0-9";
+    errors.password1 = "Please Use only Numbers 0-9";
   }
 
   if (!Validator.equals(data.password2, data.password1)) {
-    errors = "Password not match";
+    errors.password2 = "Password not match";
   }
 
   //If Empty
