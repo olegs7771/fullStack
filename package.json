@@ -1,5 +1,5 @@
 {
-  "name": "fullstackproject",
+  "name": "fullstack",
   "version": "1.0.0",
   "description": "Social Network For Developers",
   "main": "server.js",
@@ -15,12 +15,13 @@
     "express": "^4.16.4",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.4.0",
-    "mongoose": "^5.3.16",
+    "mongoose": "^5.4.0",
+    "npm": "^6.5.0",
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "validator": "^10.9.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.8"
+    "nodemon": "^1.18.9"
   }
 }

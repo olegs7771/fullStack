@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
+
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken"); //creates token
+const passport = require("passport"); //verifys token
 
 //Load Validation with Validator
 const validateRegisterInput = require("../../validation/register");
@@ -105,6 +106,10 @@ router.post("/login", (req, res) => {
   });
 });
 
+// @route GET api/users/current // protected route must use passport.authenticate('strategy'....)
+// @desc  Return current user
+// @access Private
+
 // @route GET api/users/current
 // @desc  Sending Token / return passport.authenticate()return Credentials
 // @access Private
@@ -116,6 +121,8 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    res.json({ msg: "Success!" });
+
     res.json(req.user);
   }
 );
