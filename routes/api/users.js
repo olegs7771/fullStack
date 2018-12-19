@@ -1,8 +1,14 @@
 const express = require("express");
 const router = express.Router();
+
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken"); //creates token
+const passport = require("passport"); //verifys token
+
+//Load Validation with Validator
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 //Bring in model User
 const User = require("../../models/User");
@@ -19,8 +25,15 @@ router.get("/", (req, res) => res.json({ msg: "this is users" }));
 // @access Public
 
 router.post("/register", (req, res) => {
-  //Checks for existence of  email
+  //validation with validateRegisterInput (first line of validation)
+  const { errors, isValid } = validateRegisterInput(req.body);
+  if (!isValid) {
+    console.log(isValid);
 
+    return res.status(400).json(errors);
+  }
+
+  //Checks for existence of  email
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       return res.status(400).json({ email: "Such Email Already Exists" });
@@ -52,11 +65,20 @@ router.post("/register", (req, res) => {
   });
 });
 
+//passport Config strategy from(config/passport.js)
+require("../../config/passport")(passport);
+
 // @route POST api/users/login
 // @desc  Login newUser / return JWT Token
 // @access Public
 
 router.post("/login", (req, res) => {
+  // //validation with validateRegisterInput (first line of validation)
+  const { errors, isValid } = validateLoginInput(req.body);
+  if (!isValid) {
+    res.status(400).json(errors);
+  }
+
   //receive body from user request
   const email = req.body.email;
   const password = req.body.password;
@@ -79,7 +101,7 @@ router.post("/login", (req, res) => {
         jwt.sign(
           data,
           secretKey.secretOrkey,
-          { expiresIn: 3600 },
+          { expiresIn: "12h" },
           (err, token) => {
             res.json({
               success: true,
@@ -94,5 +116,22 @@ router.post("/login", (req, res) => {
   });
 });
 
+// @route GET api/users/current // protected route must use passport.authenticate('strategy'....)
+// @desc  Return current user
+// @access Private
+
+// @route GET api/users/current
+// @desc  Sending Token / return passport.authenticate()return Credentials
+// @access Private
+
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    res.json({ msg: "Success!" });
+
+    res.json(req.user);
+  }
+);
+
 module.exports = router;
-//test
