@@ -5,8 +5,8 @@ module.exports = function validateRegisterInput(data) {
   //data.name can not be object!
   data.name = !isEmpty(data.name) ? data.name : "";
   data.email = !isEmpty(data.email) ? data.email : "";
-  data.password = !isEmpty(data.password1) ? data.password1 : "";
-  data.password = !isEmpty(data.password2) ? data.password2 : "";
+  data.password1 = !isEmpty(data.password1) ? data.password1 : "";
+  data.password2 = !isEmpty(data.password2) ? data.password2 : "";
 
   let errors = {};
   if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
@@ -26,17 +26,17 @@ module.exports = function validateRegisterInput(data) {
   //If Empty
   if (Validator.isEmpty(data.name)) {
     {
-      errors = "Name can not be empty!";
+      errors.name = "Name can not be empty!";
     }
   }
   if (Validator.isEmpty(data.email)) {
     {
-      errors = "Email can not be empty!";
+      errors.email = "Email can not be empty!";
     }
   }
-  if (Validator.isEmpty(data.password)) {
+  if (Validator.isEmpty(data.password1)) {
     {
-      errors = "Password can not be empty!";
+      errors.password1 = "Password can not be empty!";
     }
   }
 
