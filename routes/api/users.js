@@ -48,7 +48,7 @@ router.post("/register", (req, res) => {
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
-        password: req.body.password,
+        password: req.body.password1,
         avatar
       });
 
@@ -74,11 +74,12 @@ require("../../config/passport")(passport);
 // @access Public
 
 router.post("/login", (req, res) => {
-  // //validation with validateRegisterInput (first line of validation)
+  // // //validation with validateRegisterInput (first line of validation)
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
     res.status(400).json(errors);
   }
+  console.log(isValid);
 
   //receive body from user request
   const email = req.body.email;
