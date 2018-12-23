@@ -2,26 +2,24 @@ const Validator = require("validator");
 const isEmpty = require("./is_empty");
 
 module.exports = function validateProfileInput(data) {
-  console.log(data);
-
   //data.name can not be object!
-  // data.handle = !isEmpty(data.handle) ? data.handle : "";
-  // data.status = !isEmpty(data.status) ? data.status : "";
-  // data.skills = !isEmpty(data.skills) ? data.skills : "";
+  data.handle = !isEmpty(data.handle) ? data.handle : "";
+  data.status = !isEmpty(data.status) ? data.status : "";
+  data.skills = !isEmpty(data.skills) ? data.skills : "";
 
-  let errors = {};
+  let errors = "";
 
   if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
     errors.handle = "Handle needs to be between 2 and 40 chacters";
   }
   if (Validator.isEmpty(data.handle)) {
-    errors.handle = "Profile handale is required";
+    errors = "Profile handale is required";
   }
   if (Validator.isEmpty(data.status)) {
-    errors.status = "Status field is required";
+    errors = "Status field is required";
   }
   if (Validator.isEmpty(data.skills)) {
-    errors.skills = "Skills field is required";
+    errors = "Skills field is required";
   }
   //Social Sites Validation
 

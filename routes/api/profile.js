@@ -15,6 +15,12 @@ router.get("/test", (req, res) => res.json({ msg: "this is profile" }));
 //passport Config strategy from(config/passport.js)
 require("../../config/passport")(passport);
 
+// @route GET api/profile/handle/:handle
+// @desc  get profile by handle
+// @access Public
+
+router.get("/handle/:handle", (req, res) => {});
+
 // @route GET api/profile/current
 // @desc  return credentials from token
 // @access Private
@@ -26,6 +32,7 @@ router.get(
     const errors = {};
 
     Profile.findOne({ user: req.user.id })
+      .populate("user", ["name", "avatar"])
       .then(profile => {
         if (!profile) {
           errors.noprofile = "There is no profile for this user";
@@ -45,10 +52,13 @@ router.post(
   "/update",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateProfileInput(req.body);
+    const { isValid, errors } = validateProfileInput(req.body);
+
     // //Check Validation
     if (!isValid) {
       //Return any errors with 400 status
+      console.log(isValid);
+
       return res.status(400).json(errors);
     }
     // // Get fields
