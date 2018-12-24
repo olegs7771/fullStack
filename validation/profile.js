@@ -41,6 +41,33 @@ module.exports = function validateProfileInput(data) {
   if (!isEmpty(data.instagram)) {
     if (!Validator.isURL(data.instagram)) errors = "Not a Valid URL";
   }
+  //Experience
+
+  if (!isEmpty(data.title)) {
+    if (!Validation.isEmpty(data.title)) {
+      errors = "Require Title field";
+    }
+  }
+  if (!isEmpty(data.company)) {
+    if (!Validation.isEmpty(data.company)) {
+      errors = "Please Fill Company";
+    }
+  }
+  if (!isEmpty(data.location)) {
+    if (!Validation.isEmpty(data.location)) {
+      errors = "Require Location field";
+    }
+  }
+  if (!isEmpty(data.from)) {
+    if (!Validation.isNum(data.from)) {
+      errors = "Require From field";
+    }
+  }
+  if (!isEmpty(data.to)) {
+    if (!Validation.isNum(data.to)) {
+      errors = "Require To field";
+    }
+  }
 
   return { errors, isValid: isEmpty(errors) };
 };

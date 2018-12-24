@@ -15,11 +15,61 @@ router.get("/test", (req, res) => res.json({ msg: "this is profile" }));
 //passport Config strategy from(config/passport.js)
 require("../../config/passport")(passport);
 
+// @route GET api/profile/all
+// @desc  get all profiles
+// @access Public
+
+router.get("/all", (req, res) => {
+  Profile.find()
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (profile) {
+        res.json(profile);
+      } else {
+        res.json({ msg: "No profile" });
+      }
+    })
+    .catch(err => res.json(err));
+});
+
 // @route GET api/profile/handle/:handle
 // @desc  get profile by handle
 // @access Public
 
-router.get("/handle/:handle", (req, res) => {});
+router.get("/handle/:handle", (req, res) => {
+  const errors = {};
+  Profile.findOne({ handle: req.params.handle }) //we grab the handle with
+    //req.params.handle and try to find it in db
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "No profile for this user";
+        res.status(404).json(errors);
+      }
+
+      console.log("profile");
+      res.json(profile);
+    })
+    .catch(err => res.json(err));
+});
+// @route GET api/profile/user/:user_id
+// @desc  get profile by ID
+// @access Public
+
+router.get("/user/:user_id", (req, res) => {
+  const errors = {};
+  Profile.findOne({ user: req.params.user_id }) //we grab the handle with
+    //req.params.handle and try to find it in db
+    .populate("user", ["name", "avatar"])
+    .then(profile => {
+      if (!profile) {
+        errors.noprofile = "No profile for this user";
+        res.status(404).json(errors);
+      }
+      res.json(profile);
+    })
+    .catch(err => res.json(err));
+});
 
 // @route GET api/profile/current
 // @desc  return credentials from token
@@ -114,6 +164,25 @@ router.post(
         });
       }
     });
+  }
+);
+
+// @route POST api/profile/experience
+// @desc  Create/Update user profile with Experience
+// @access Private
+
+router.post(
+  "/exp",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { isValid, errors } = validateProfileInput(req.body);
+    //Check Validation
+    if (!isValid) {
+      //Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+    //Get experience field
+    const exp = {};
   }
 );
 
