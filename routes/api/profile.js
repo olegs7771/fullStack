@@ -6,6 +6,8 @@ const Users = require("../../models/User");
 //Load Validation
 
 const validateProfileInput = require("../../validation/profile");
+const validateExperienceInput = require("../../validation/experience");
+const validateEducationInput = require("../../validation/education");
 
 // @route GET api/profile
 // @desc  Test profile route
@@ -175,14 +177,91 @@ router.post(
   "/exp",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { isValid, errors } = validateProfileInput(req.body);
-    //Check Validation
+    const { isValid, errors } = validateExperienceInput(req.body);
     if (!isValid) {
-      //Return any errors with 400 status
-      return res.status(400).json(errors);
+      res.status(400).json(errors);
     }
-    //Get experience field
-    const exp = {};
+
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["avatar", "name"])
+      .then(profile => {
+        //Create Experience Fields
+        const newExp = {};
+        newExp.title = req.body.title;
+        newExp.company = req.body.company;
+        newExp.location = req.body.location;
+        newExp.from = req.body.from;
+        newExp.to = req.body.to;
+        newExp.current = req.body.current;
+        newExp.description = req.body.description;
+
+        //Add experience to array.We are using unshift() to put in the biggining of array.
+
+        profile.experience.unshift(newExp);
+        profile.save().then(profile => {
+          res.json(profile);
+        });
+      });
+  }
+);
+// @route POST api/profile/education
+// @desc  Create/Update user profile with Education
+// @access Private
+
+router.post(
+  "/edu",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { isValid, errors } = validateEducationInput(req.body);
+    if (!isValid) {
+      res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["avatar", "name"])
+      .then(profile => {
+        //Create Education Fields
+        const newEdu = {};
+        newEdu.school = req.body.school;
+        newEdu.degree = req.body.degree;
+        newEdu.fieldofstudy = req.body.fieldofstudy;
+        newEdu.from = req.body.from;
+        newEdu.to = req.body.to;
+        newEdu.current = req.body.current;
+        newEdu.description = req.body.description;
+
+        //Add education to array.We are using unshift() to put in the biggining of array.
+
+        profile.education.unshift(newEdu);
+        profile.save().then(profile => {
+          res.json(profile);
+        });
+      });
+  }
+);
+
+// @ Route DELETE   api/profile/exp/:exp_id
+// @ Desc deletes from profile experience
+// @ Access Private
+
+router.delete(
+  "/exp/:exp_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("deleting...");
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        //Get remove index
+        const removeIndex = profile.experience
+          .map(item => item.id)
+          .indexOf(req.params.exp_id);
+        //Splice out item
+
+        profile.experience.splice(removeIndex, 1);
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.json(err));
   }
 );
 
