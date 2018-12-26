@@ -18,7 +18,9 @@ const secretKey = require("../../config/keys");
 // @route GET api/users
 // @desc  Test users route
 // @access Public
-router.get("/", (req, res) => res.json({ msg: "this is users" }));
+router.get("/", passport.authenticate("jwt", { session: false }), (req, res) =>
+  res.json(req.user)
+);
 
 // @route POST api/users/register
 // @desc  Registaer newUser
@@ -28,9 +30,6 @@ router.post("/register", (req, res) => {
   //validation with validateRegisterInput (first line of validation)
   const { errors, isValid } = validateRegisterInput(req.body);
   if (!isValid) {
-    console.log(isValid);
-    console.log(errors);
-
     return res.status(400).json(errors);
   }
 
@@ -79,7 +78,6 @@ router.post("/login", (req, res) => {
   if (!isValid) {
     res.status(400).json(errors);
   }
-  console.log(isValid);
 
   //receive body from user request
   const email = req.body.email;
@@ -118,10 +116,6 @@ router.post("/login", (req, res) => {
   });
 });
 
-// @route GET api/users/current // protected route must use passport.authenticate('strategy'....)
-// @desc  Return current user
-// @access Private
-
 // @route GET api/users/current
 // @desc  Sending Token / return passport.authenticate()return Credentials
 // @access Private
@@ -130,9 +124,11 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json({ msg: "Success!" });
-
-    res.json(req.user);
+    res.json({
+      name: req.user.name,
+      email: req.user.email,
+      avatar: req.user.avatar
+    });
   }
 );
 
