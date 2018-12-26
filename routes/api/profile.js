@@ -109,7 +109,6 @@ router.post(
     // //Check Validation
     if (!isValid) {
       //Return any errors with 400 status
-      console.log(isValid);
 
       return res.status(400).json(errors);
     }
@@ -262,6 +261,45 @@ router.delete(
         profile.save().then(profile => res.json(profile));
       })
       .catch(err => res.json(err));
+  }
+);
+// @ Route DELETE   api/profile/edu/:exp_id
+// @ Desc deletes from profile education
+// @ Access Private
+
+router.delete(
+  "/edu/:edu_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log("deleting...");
+
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        //Get remove index
+        const removeIndex = profile.education
+          .map(item => item.id)
+          .indexOf(req.params.exp_id);
+        //Splice out item
+
+        profile.education.splice(removeIndex, 1);
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.json(err));
+  }
+);
+// @ Route DELETE   api/profile/delete/:delete_id
+// @ Desc deletes Profile and User
+// @ Access Private
+
+router.delete(
+  "/delete/:_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id }).then(() => {
+      Users.findOneAndRemove({ _id: req.user.id }).then(user => {
+        res.json({ success: true });
+      });
+    });
   }
 );
 
