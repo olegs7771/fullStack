@@ -71,4 +71,22 @@ router.post(
   }
 );
 
+// @route DELETE api/posts/:id
+// @desc  Route to Delete Post by Id
+// @access Private
+
+router.delete(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.params.id);
+
+    Post.findOneAndRemove({ _id: req.params.id })
+      .then(post => {
+        res.json({ success: true });
+      })
+      .catch(err => res.json(err));
+  }
+);
+
 module.exports = router;
