@@ -9,7 +9,7 @@ module.exports = function validatePostInput(data) {
   if (Validator.isEmpty(data.text)) {
     errors = "Please write some comment";
   }
-  if (Validator.isLength(data.text, { min: 3, max: 200 })) {
+  if (!Validator.isLength(data.text, { min: 3, max: 200 })) {
     errors = "text must contain at least 3 characters";
   }
 
