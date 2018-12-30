@@ -1,31 +1,35 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Header extends Component {
   render() {
     return (
       <div className="pos-f-t">
         <nav className="navbar  navbar-dark bg-dark">
-          <div className="navbar-brand">DevConect</div>
+          <Link to="/">
+            <span className="navbar-brand">DevConnector</span>
+          </Link>
+
           <nav className="navbar navbar-expand-lg mr-auto ">
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0 ">
               <li className="nav-item">
-                <a href="/" className="nav-link">
+                <Link to="/" className="nav-link">
                   Developers
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>
           <nav className="navbar navbar-expand-lg ml-auto ">
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
               <li className="nav-item">
-                <a href="/" className="nav-link">
+                <Link to="/" className="nav-link">
                   Sign Up
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a href="/" className="nav-link">
+                <Link to="/" className="nav-link">
                   Login
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

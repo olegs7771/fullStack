@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 class Main extends Component {
   render() {
@@ -9,6 +10,16 @@ class Main extends Component {
             <div className="row">
               <div className="col-md-12 text-center">
                 <div className="display-4 mb-4">Developer Connector</div>
+                <p>
+                  Create a Developer Profile/Portfolio. Shared with other
+                  Developers
+                </p>
+                <Link to="/register" className="btn btn-lg btn-info mr-2">
+                  SignUp
+                </Link>
+                <Link to="/register" className="btn btn-lg btn-light ">
+                  Login
+                </Link>
               </div>
             </div>
           </div>
