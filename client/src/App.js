@@ -4,6 +4,7 @@ import Header from "./components/layout/Header";
 import Main from "./components/layout/Main";
 import Footer from "./components/layout/Footer";
 import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 
 import "./App.css";
 
@@ -13,12 +14,13 @@ class App extends Component {
       <Router>
         <div className="App">
           <Header />
-          <Switch>
-            <div className="container">
+          <div className="container">
+            <Switch>
               <Route exact path="/" component={Main} />
               <Route exact path="/register" component={Register} />
-            </div>
-          </Switch>
+              <Route exact path="/login" component={Login} />
+            </Switch>
+          </div>
           <Footer />
         </div>
       </Router>

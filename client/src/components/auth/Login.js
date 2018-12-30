@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
-class Register extends Component {
+class Login extends Component {
   state = {
     name: "",
     email: "",
@@ -16,44 +15,18 @@ class Register extends Component {
     });
   };
 
-  onSubmitRegister = e => {
-    e.preventDefault();
-    const { name, email, password1, password2 } = this.state;
-    const newUser = {
-      name,
-      email,
-      password1,
-      password2
-    };
-    axios
-      .post("/api/users/register", newUser)
-      .then(result => console.log(result.data))
-      .catch(err => console.log(err));
-  };
-
   render() {
-    const { name, email, password1, password2 } = this.state;
+    const { email, password1 } = this.state;
     return (
       <div className="register">
         <div className="row">
           <div className="col-md-6 mx-auto">
             <br />
             <div className="card">
-              <div className="card-header text-center h4">Register</div>
+              <div className="card-header text-center h4">Login</div>
               <div className="card-body">
                 <div className="container">
                   <form onSubmit={this.onSubmitRegister}>
-                    <div className="group-control group-control-lg">
-                      <label>Name</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="name"
-                        value={name}
-                        placeholder="Name..."
-                        onChange={this.onChange}
-                      />
-                    </div>
                     <div className="group-control group-control-lg">
                       <label>Email</label>
                       <input
@@ -76,23 +49,13 @@ class Register extends Component {
                         onChange={this.onChange}
                       />
                     </div>
-                    <div className="group-control group-control-lg">
-                      <label>Confirm Password</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="password2"
-                        value={password2}
-                        placeholder="Confirm Password..."
-                        onChange={this.onChange}
-                      />
-                    </div>
+
                     <br />
                     <input
                       type="submit"
                       className="btn btn-secondary btn-lg
                       "
-                      value="Register"
+                      value="Login"
                     />
                   </form>
                 </div>
@@ -104,4 +67,4 @@ class Register extends Component {
     );
   }
 }
-export default Register;
+export default Login;
