@@ -28,8 +28,9 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) =>
 
 router.post("/register", (req, res) => {
   //validation with validateRegisterInput (first line of validation)
-  const { errors, isValid } = validateRegisterInput(req.body);
-  if (!isValid) {
+  const { errors } = validateRegisterInput(req.body);
+
+  if (Object.keys(errors).length > 0) {
     return res.status(400).json(errors);
   }
 
@@ -58,7 +59,7 @@ router.post("/register", (req, res) => {
           newUser
             .save()
             .then(user => res.json(user))
-            .catch(err => console.log(err));
+            .catch(err => res.json(err));
         });
       });
     }
