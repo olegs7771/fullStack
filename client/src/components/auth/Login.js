@@ -2,10 +2,9 @@ import React, { Component } from "react";
 
 class Login extends Component {
   state = {
-    name: "",
     email: "",
     password1: "",
-    password2: "",
+
     errors: {}
   };
 

@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class Header extends Component {
   render() {
+    const { user } = this.props.auth;
+
     return (
       <div className="pos-f-t">
         <nav className="navbar  navbar-dark bg-dark py-0">
@@ -19,6 +23,7 @@ class Header extends Component {
               </li>
             </ul>
           </nav>
+
           <nav className="navbar navbar-expand-lg ml-auto ">
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
               <li className="nav-item">
@@ -56,4 +61,10 @@ class Header extends Component {
     );
   }
 }
-export default Header;
+Header.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(mapStateToProps)(Header);
