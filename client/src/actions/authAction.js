@@ -1,4 +1,4 @@
-import { TEST_DISPATCH, GET_ERRORS, POST_REGISTER } from "./types";
+import { GET_ERRORS } from "./types";
 import axios from "axios";
 
 //Register User
@@ -12,9 +12,20 @@ export const registerUser = (userData, history) => dispatch => {
         payload: err.response.data
       })
     );
+};
 
-  return {
-    type: TEST_DISPATCH,
-    payload: userData
-  };
+//Login User---> Get User Token
+
+export const loginUser = userData => dispatch => {
+  axios
+    .post("/api/user/login", userData)
+    .then(res => {
+      //Save to localStorage
+      const { token } = res.data;
+      //
+    })
+    .catch({
+      type: GET_ERRORS,
+      payload: err.response.data
+    });
 };
