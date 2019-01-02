@@ -1,14 +1,19 @@
-import { TEST_ACTION } from "../actions/types";
+import { SET_CURRENT_USER } from "../actions/types";
+import isEmpty from "../validation/is_Empty";
 
 const initialState = {
-  authenticate: false,
+  authenticated: false,
   user: {}
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case TEST_ACTION:
-      return state;
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        authenticated: !isEmpty(action.payload), //checkin if user authenticated and has token
+        user: action.payload
+      };
     default:
       return state;
   }
