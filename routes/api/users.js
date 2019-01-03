@@ -18,9 +18,7 @@ const secretKey = require("../../config/keys");
 // @route GET api/users
 // @desc  Test users route
 // @access Public
-router.get("/", passport.authenticate("jwt", { session: false }), (req, res) =>
-  res.json(req.user)
-);
+router.get("/", (req, res) => res.json(req.user));
 
 // @route POST api/users/register
 // @desc  Registaer newUser
@@ -111,7 +109,7 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        res.json({ msg: "Password Incorrect" });
+        res.status(400).json({ password: "Password Incorrect" });
       }
     });
   });

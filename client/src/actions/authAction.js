@@ -34,6 +34,7 @@ export const loginUser = (userData, history) => dispatch => {
       //set current user
       dispatch(setCurrentUser(decoded)); // we must set this user
     })
+    .then(res => history.push("/dashboard"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

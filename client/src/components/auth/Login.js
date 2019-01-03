@@ -5,6 +5,13 @@ import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 
 class Login extends Component {
+  static getDerivedStateFromProps(props, state) {
+    console.log(props);
+    if (props.errors) {
+      return { errors: props.errors };
+    }
+  }
+
   state = {
     email: "",
     password: "",
@@ -27,13 +34,6 @@ class Login extends Component {
     };
     this.props.loginUser(newUser, this.props.history);
   };
-
-  static getDerivedStateFromProps(props, state) {
-    console.log(props);
-    if (props.errors) {
-      return { errors: props.errors };
-    }
-  }
 
   render() {
     const { errors } = this.props;
@@ -73,7 +73,7 @@ class Login extends Component {
                         className={classnames("form-control form-control-lg", {
                           "is-invalid": errors.password
                         })}
-                        name="password1"
+                        name="password"
                         value={password}
                         placeholder="Password..."
                         onChange={this.onChange}
