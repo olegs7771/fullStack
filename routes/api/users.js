@@ -76,8 +76,8 @@ require("../../config/passport")(passport);
 router.post("/login", (req, res) => {
   // // //validation with validateRegisterInput (first line of validation)
   const { errors, isValid } = validateLoginInput(req.body);
-  if (!isValid) {
-    res.status(400).json(errors);
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json(errors);
   }
 
   //receive body from user request

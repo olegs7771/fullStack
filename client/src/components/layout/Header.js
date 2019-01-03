@@ -5,8 +5,6 @@ import PropTypes from "prop-types";
 
 class Header extends Component {
   render() {
-    const { user } = this.props.auth;
-
     return (
       <div className="pos-f-t">
         <nav className="navbar  navbar-dark bg-dark py-0">

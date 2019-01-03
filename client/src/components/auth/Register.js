@@ -40,12 +40,10 @@ class Register extends Component {
   }
 
   render() {
-    const { user } = this.props.auth;
-
     console.log(this.props.errors);
 
     const { name, email, password1, password2, errors } = this.state;
-    console.log(errors);
+
     return (
       <div className="register">
         <div className="row">
