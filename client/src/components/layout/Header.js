@@ -3,8 +3,52 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+import { logoutUser } from "../../actions/authAction";
+
 class Header extends Component {
+  //Logout User
+  logoutUser = e => {
+    e.preventDefault();
+    this.props.logoutUser();
+  };
+
   render() {
+    console.log(this.props);
+    const { user, authenticated } = this.props.auth;
+
+    const authLinks = (
+      <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
+        <li className="nav-item">
+          <Link to="/register" className="nav-link">
+            user
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link
+            to="/login"
+            className="nav-link"
+            onClick={this.logoutUser.bind(this)}
+          >
+            Logout
+          </Link>
+        </li>
+      </ul>
+    );
+    const guestLinks = (
+      <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
+        <li className="nav-item">
+          <Link to="/register" className="nav-link">
+            Sign Up
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link to="/login" className="nav-link">
+            Login
+          </Link>
+        </li>
+      </ul>
+    );
+
     return (
       <div className="pos-f-t">
         <nav className="navbar  navbar-dark bg-dark py-0">
@@ -23,18 +67,7 @@ class Header extends Component {
           </nav>
 
           <nav className="navbar navbar-expand-lg ml-auto ">
-            <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
-              <li className="nav-item">
-                <Link to="/register" className="nav-link">
-                  Sign Up
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to="/login" className="nav-link">
-                  Login
-                </Link>
-              </li>
-            </ul>
+            {authenticated ? authLinks : guestLinks}
           </nav>
 
           <button
@@ -64,5 +97,9 @@ Header.propTypes = {
 };
 const mapStateToProps = state => ({
   auth: state.auth
+  // authenticated: state.auth
 });
-export default connect(mapStateToProps)(Header);
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Header);

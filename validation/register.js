@@ -41,5 +41,5 @@ module.exports = function validateRegisterInput(data) {
     }
   }
 
-  return { errors };
+  return { errors, isValid: isEmpty(errors) };
 };

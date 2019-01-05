@@ -2,13 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authAction";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
+
+import TextInputForm from "../common/TextInputForm";
 
 class Login extends Component {
   static getDerivedStateFromProps(props, state) {
-    console.log(props);
     if (props.errors) {
       return { errors: props.errors };
+    } else {
+      return null;
     }
   }
 
@@ -50,40 +52,23 @@ class Login extends Component {
               <div className="card-body">
                 <div className="container">
                   <form onSubmit={this.onSubmitLogin}>
-                    <div className="group-control ">
-                      <label>Email</label>
-                      <input
-                        type="email"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.email
-                        })}
-                        name="email"
-                        value={email}
-                        placeholder="Email..."
-                        onChange={this.onChange}
-                      />
-                      {errors.email && (
-                        <div className="invalid-feedback">{errors.email}</div>
-                      )}
-                    </div>
-                    <div className="group-control ">
-                      <label>Password</label>
-                      <input
-                        type="text"
-                        className={classnames("form-control form-control-lg", {
-                          "is-invalid": errors.password
-                        })}
-                        name="password"
-                        value={password}
-                        placeholder="Password..."
-                        onChange={this.onChange}
-                      />
-                      {errors.password && (
-                        <div className="invalid-feedback">
-                          {errors.password}
-                        </div>
-                      )}
-                    </div>
+                    <TextInputForm
+                      name="email"
+                      value={email}
+                      placeholder="email.."
+                      type="email"
+                      onChange={this.onChange}
+                      error={errors.email}
+                      info="This site uses Gravatar"
+                    />
+                    <TextInputForm
+                      name="password"
+                      value={password}
+                      placeholder="password.."
+                      type="text"
+                      onChange={this.onChange}
+                      error={errors.password}
+                    />
 
                     <br />
                     <input

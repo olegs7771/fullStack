@@ -11,9 +11,10 @@ export default function(state = initialState, action) {
     case SET_CURRENT_USER:
       return {
         ...state,
-        authenticated: !isEmpty(action.payload), //checkin if user authenticated and has token
+        authenticated: !isEmpty(action.payload),
         user: action.payload
       };
+
     default:
       return state;
   }

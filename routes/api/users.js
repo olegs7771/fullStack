@@ -26,9 +26,9 @@ router.get("/", (req, res) => res.json(req.user));
 
 router.post("/register", (req, res) => {
   //validation with validateRegisterInput (first line of validation)
-  const { errors } = validateRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInput(req.body);
 
-  if (Object.keys(errors).length > 0) {
+  if (!isValid) {
     return res.status(400).json(errors);
   }
 
@@ -74,7 +74,7 @@ require("../../config/passport")(passport);
 router.post("/login", (req, res) => {
   // // //validation with validateRegisterInput (first line of validation)
   const { errors, isValid } = validateLoginInput(req.body);
-  if (Object.keys(errors).length > 0) {
+  if (!isValid) {
     return res.status(400).json(errors);
   }
 
