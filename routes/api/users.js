@@ -18,9 +18,7 @@ const secretKey = require("../../config/keys");
 // @route GET api/users
 // @desc  Test users route
 // @access Public
-router.get("/", passport.authenticate("jwt", { session: false }), (req, res) =>
-  res.json(req.user)
-);
+router.get("/", (req, res) => res.json(req.user));
 
 // @route POST api/users/register
 // @desc  Registaer newUser
@@ -29,6 +27,7 @@ router.get("/", passport.authenticate("jwt", { session: false }), (req, res) =>
 router.post("/register", (req, res) => {
   //validation with validateRegisterInput (first line of validation)
   const { errors, isValid } = validateRegisterInput(req.body);
+
   if (!isValid) {
     return res.status(400).json(errors);
   }
@@ -58,7 +57,7 @@ router.post("/register", (req, res) => {
           newUser
             .save()
             .then(user => res.json(user))
-            .catch(err => console.log(err));
+            .catch(err => res.json(err));
         });
       });
     }
@@ -76,7 +75,7 @@ router.post("/login", (req, res) => {
   // // //validation with validateRegisterInput (first line of validation)
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) {
-    res.status(400).json(errors);
+    return res.status(400).json(errors);
   }
 
   //receive body from user request
@@ -110,7 +109,7 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        res.json({ msg: "Password Incorrect" });
+        res.status(400).json({ password: "Password Incorrect" });
       }
     });
   });

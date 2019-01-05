@@ -8,23 +8,23 @@ module.exports = function validateExperienceInput(data) {
   data.company = !isEmpty(data.company) ? data.company : "";
   data.from = !isEmpty(data.from) ? data.from : "";
 
-  let errors = "";
+  let errors = {};
 
   //If Empty
 
   if (Validator.isEmpty(data.title)) {
     {
-      errors = "Title can not be empty!";
+      errors.title = "Title can not be empty!";
     }
   }
   if (Validator.isEmpty(data.company)) {
     {
-      errors = "Company can not be empty!";
+      errors.company = "Company can not be empty!";
     }
   }
   if (Validator.isEmpty(data.from)) {
     {
-      errors = "From can not be empty!";
+      errors.from = "From can not be empty!";
     }
   }
 

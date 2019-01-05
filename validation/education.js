@@ -8,24 +8,24 @@ module.exports = function validateEducationInput(data) {
   data.degree = !isEmpty(data.degree) ? data.degree : "";
   data.from = !isEmpty(data.from) ? data.from : "";
 
-  let errors = "";
+  let errors = {};
   console.log(data);
 
   //If Empty
 
   if (Validator.isEmpty(data.school)) {
     {
-      errors = "School can not be empty!";
+      errors.school = "School can not be empty!";
     }
   }
   if (Validator.isEmpty(data.degree)) {
     {
-      errors = "Degree can not be empty!";
+      errors.degree = "Degree can not be empty!";
     }
   }
   if (Validator.isEmpty(data.from)) {
     {
-      errors = "From can not be empty!";
+      errors.from = "From can not be empty!";
     }
   }
 
