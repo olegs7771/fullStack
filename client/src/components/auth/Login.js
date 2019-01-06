@@ -2,10 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authAction";
 import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import TextInputForm from "../common/TextInputForm";
 
 class Login extends Component {
+  state = {
+    email: "",
+    password: "",
+    errors: {}
+  };
+
   static getDerivedStateFromProps(props, state) {
     if (props.errors) {
       return { errors: props.errors };
@@ -13,12 +20,6 @@ class Login extends Component {
       return null;
     }
   }
-
-  state = {
-    email: "",
-    password: "",
-    errors: {}
-  };
 
   onChange = e => {
     this.setState({
@@ -43,7 +44,7 @@ class Login extends Component {
 
     const { email, password } = this.state;
     return (
-      <div className="register">
+      <div className="main_height">
         <div className="row">
           <div className="col-md-6 mx-auto">
             <br />
@@ -86,6 +87,13 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
   auth: state.auth,
   errors: state.errors

@@ -13,14 +13,13 @@ class Header extends Component {
   };
 
   render() {
-    console.log(this.props);
     const { user, authenticated } = this.props.auth;
 
     const authLinks = (
       <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
         <li className="nav-item">
           <Link to="/register" className="nav-link">
-            user
+            Registered as {user.name}
           </Link>
         </li>
         <li className="nav-item">
@@ -63,6 +62,11 @@ class Header extends Component {
                   Developers
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link to="/dashboard" className="nav-link">
+                  Dashboard
+                </Link>
+              </li>
             </ul>
           </nav>
 
@@ -93,11 +97,11 @@ class Header extends Component {
   }
 }
 Header.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
-  // authenticated: state.auth
 });
 export default connect(
   mapStateToProps,
