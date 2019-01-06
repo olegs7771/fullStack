@@ -5,7 +5,9 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileAction";
 
 class Dashboard extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    console.log(this.props);
+  }
 
   render() {
     return (
@@ -15,7 +17,13 @@ class Dashboard extends Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  profile: state.profile,
+  profiles: state.profiles,
+  errors: state.errors
+});
+
 export default connect(
-  null,
+  mapStateToProps,
   { getCurrentProfile }
 )(Dashboard);
