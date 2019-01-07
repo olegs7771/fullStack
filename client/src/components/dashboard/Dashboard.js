@@ -20,13 +20,15 @@ class Dashboard extends Component {
     if (profile === null || loading) {
       dashboardContent = <Spinner />;
     } else {
-      dashboardContent = <h4>Wellcom {user.name}</h4>;
+      dashboardContent = <h5>Wellcom {user.name}</h5>;
     }
 
     return (
       <div className="main_height">
         <div className="row">
-          <div className="col-md-12 mx-auto">{dashboardContent}</div>
+          <div className="col-md-12 mx-auto">
+            <div className="container mt-4">{dashboardContent}</div>
+          </div>
         </div>
       </div>
     );
