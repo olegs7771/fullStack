@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import jwt_decode from "jwt-decode"; //decode token
 import setAuthToken from "./utils/setAuthToken"; // setting  token to header as Authorization( like in postman)
 import { setCurrentUser } from "./actions/authAction"; //will send action to set state auth.user:{}
+import { clearCurrentProfile } from "./actions/profileAction";
 
 //redux
 import { Provider } from "react-redux";
@@ -15,6 +16,18 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import "./App.css";
+// redux-auth-wrapper
+import { connectedRouterRedirect } from "redux-auth-wrapper";
+
+// const userIsAuthenticated = connectedRouterRedirect({
+//   // The url to redirect user to if they fail
+//   redirectPath: "/login",
+//   // If selector is true, wrapper will not redirect
+//   // For example let's check that state contains user data
+//   authenticatedSelector: state => state.user.data !== null,
+//   // A nice display name for this check
+//   wrapperDisplayName: "UserIsAuthenticated"
+// });
 
 //check for token
 if (localStorage.jwtToken) {
@@ -24,8 +37,16 @@ if (localStorage.jwtToken) {
   const decoded = jwt_decode(localStorage.jwtToken);
   //set currentUser to auth.user in redux state and  Authenticate
   store.dispatch(setCurrentUser(decoded));
-}
 
+  //check for expired token
+  const currentTime = Date.now() / 1000;
+  if (decoded.exp < currentTime) {
+    //logout user
+    store.dispatch(clearCurrentProfile());
+    //redirect to login
+    window.location.href = "/login";
+  }
+}
 class App extends Component {
   render() {
     return (

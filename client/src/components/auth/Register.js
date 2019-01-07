@@ -34,15 +34,12 @@ class Register extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    console.log(props);
     if (props.errors) {
       return { errors: props.errors };
     }
   }
 
   render() {
-    console.log(this.props.errors);
-
     const { name, email, password1, password2, errors } = this.state;
 
     return (
