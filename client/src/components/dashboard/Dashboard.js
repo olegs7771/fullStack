@@ -23,7 +23,13 @@ class Dashboard extends Component {
       dashboardContent = <h4>Wellcom {user.name}</h4>;
     }
 
-    return <div className="main_height">{dashboardContent}</div>;
+    return (
+      <div className="main_height">
+        <div className="row">
+          <div className="col-md-12 mx-auto">{dashboardContent}</div>
+        </div>
+      </div>
+    );
   }
 }
 Dashboard.propTypes = {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { userIsAuthenticated, userIsNotAuthenticated } from "./authWrapper";
 //setting localStorage for storing currentUser
 import jwt_decode from "jwt-decode"; //decode token
 import setAuthToken from "./utils/setAuthToken"; // setting  token to header as Authorization( like in postman)
@@ -16,18 +17,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import "./App.css";
-// redux-auth-wrapper
-import { connectedRouterRedirect } from "redux-auth-wrapper";
-
-// const userIsAuthenticated = connectedRouterRedirect({
-//   // The url to redirect user to if they fail
-//   redirectPath: "/login",
-//   // If selector is true, wrapper will not redirect
-//   // For example let's check that state contains user data
-//   authenticatedSelector: state => state.user.data !== null,
-//   // A nice display name for this check
-//   wrapperDisplayName: "UserIsAuthenticated"
-// });
+import { log } from "util";
 
 //check for token
 if (localStorage.jwtToken) {
@@ -58,8 +48,16 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Main} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/dashboard" component={Dashboard} />
+                <Route
+                  exact
+                  path="/login"
+                  component={userIsNotAuthenticated(Login)}
+                />
+                <Route
+                  exact
+                  path="/dashboard"
+                  component={userIsAuthenticated(Dashboard)}
+                />
               </Switch>
             </div>
             <Footer />
