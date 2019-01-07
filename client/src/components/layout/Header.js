@@ -4,12 +4,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { logoutUser } from "../../actions/authAction";
+import { clearCurrentProfile } from "../../actions/profileAction";
 
 class Header extends Component {
   //Logout User
   logoutUser = e => {
     e.preventDefault();
     this.props.logoutUser();
+    this.props.clearCurrentProfile();
   };
 
   render() {
@@ -19,7 +21,12 @@ class Header extends Component {
       <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
         <li className="nav-item">
           <Link to="/register" className="nav-link">
-            Registered as {user.name}
+            <img
+              src={user.avatar}
+              alt={user.name}
+              style={{ width: "25px" }}
+              className="rounded-circle"
+            />
           </Link>
         </li>
         <li className="nav-item">
@@ -105,5 +112,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(Header);
