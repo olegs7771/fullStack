@@ -16,7 +16,6 @@ import Footer from "./components/layout/Footer";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
-import CreateProfile from "./components/create-profile/CreateProfile";
 import "./App.css";
 
 //check for token
@@ -34,7 +33,7 @@ if (localStorage.jwtToken) {
     //logout user
     store.dispatch(clearCurrentProfile());
     //redirect to login
-    window.location.href = "/login";
+    window.location.href = "/main";
   }
 }
 class App extends Component {
@@ -57,11 +56,6 @@ class App extends Component {
                   exact
                   path="/dashboard"
                   component={userIsAuthenticated(Dashboard)}
-                />
-                <Route
-                  exact
-                  path="/create-profile"
-                  component={userIsAuthenticated(CreateProfile)}
                 />
               </Switch>
             </div>
