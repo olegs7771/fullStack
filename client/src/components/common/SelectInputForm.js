@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 
 const SelectInputForm = ({
   name,
-  lable,
-  type,
   value,
   placeholder,
   onChange,
@@ -14,6 +12,8 @@ const SelectInputForm = ({
   disabled,
   options
 }) => {
+  //  const selectOptions= options.map()
+
   return (
     <div className="group-control ">
       <input
@@ -32,17 +32,14 @@ const SelectInputForm = ({
   );
 };
 
-SelectInputForm.defaultProps = {
-  type: "text"
-};
 SelectInputForm.propTypes = {
   name: PropTypes.string.isRequired,
-  lable: PropTypes.string,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   info: PropTypes.string,
   error: PropTypes.string,
   disabled: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired
 };
 
