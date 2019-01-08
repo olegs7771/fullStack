@@ -38,6 +38,9 @@ class CreateProfile extends Component {
   render() {
     console.log(this.props);
     const { user } = this.props.auth;
+    const { errors } = this.props;
+    console.log(errors);
+
     const {
       displaySocialInput,
       handle,
@@ -52,8 +55,7 @@ class CreateProfile extends Component {
       facebook,
       linkedin,
       youtube,
-      instagram,
-      errors
+      instagram
     } = this.state;
 
     return (
@@ -77,6 +79,14 @@ class CreateProfile extends Component {
                       onChange={this.onChange}
                       error={errors.handle}
                     />
+                    <TextInputForm
+                      name="handle"
+                      value={handle}
+                      placeholder=" * Handle"
+                      onChange={this.onChange}
+                      error={errors.handle}
+                    />
+                    <select name="Skills" id="" />
                     <input
                       type="submit"
                       value="Submit"

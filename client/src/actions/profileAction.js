@@ -53,8 +53,8 @@ export const registerCurrentProfile = () => dispatch => {
     })
     .catch(err => {
       dispatch({
-        type: UPDATE_CURRENT_PROFILE,
-        payload: err.res.data
+        type: GET_ERRORS,
+        payload: err.response.data
       });
     });
 };
