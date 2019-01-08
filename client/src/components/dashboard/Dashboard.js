@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../App.css";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileAction";
@@ -20,14 +20,40 @@ class Dashboard extends Component {
     if (profile === null || loading) {
       dashboardContent = <Spinner />;
     } else {
-      dashboardContent = <h5>Wellcom {user.name}</h5>;
+      //check for profile
+      if (profile === {}) {
+        //user has profile
+      } else {
+        dashboardContent = (
+          <div className="mt-3">
+            <h3>
+              Welcome <small className="muted">{user.name}</small>
+            </h3>
+            <p className="muted">
+              You have not set profile yet. You can create a new profile
+              <Link to="/create-profile">
+                <input
+                  type="submit"
+                  value="here"
+                  className="btn btn-link  "
+                  value="here"
+                />
+              </Link>
+            </p>
+          </div>
+        );
+      }
     }
 
     return (
       <div className="main_height">
-        <div className="row">
-          <div className="col-md-12 mx-auto">
-            <div className="container mt-4">{dashboardContent}</div>
+        <div className="container mt-4">
+          <div className="row">
+            <div className="col-md-12 mx-auto">
+              <div className="display-4 text-center">Dashboard</div>
+
+              {dashboardContent}
+            </div>
           </div>
         </div>
       </div>

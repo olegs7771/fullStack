@@ -5,7 +5,8 @@ import {
   GET_PROFILE,
   PROFILE_LOADING,
   GET_ERRORS,
-  CLEAR_CURRENT_PROFILE
+  CLEAR_CURRENT_PROFILE,
+  UPDATE_CURRENT_PROFILE
 } from "./types";
 
 //get current profile
@@ -38,4 +39,22 @@ export const clearCurrentProfile = () => {
   return {
     type: CLEAR_CURRENT_PROFILE
   };
+};
+//create or update current user profile
+
+export const registerCurrentProfile = () => dispatch => {
+  axios
+    .post("/api/profile/update")
+    .then(res => {
+      dispatch({
+        type: UPDATE_CURRENT_PROFILE,
+        payload: res.data
+      });
+    })
+    .catch(err => {
+      dispatch({
+        type: UPDATE_CURRENT_PROFILE,
+        payload: err.res.data
+      });
+    });
 };

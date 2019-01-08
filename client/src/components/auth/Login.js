@@ -40,7 +40,6 @@ class Login extends Component {
 
   render() {
     const { errors } = this.props;
-    console.log(errors);
 
     const { email, password } = this.state;
     return (
