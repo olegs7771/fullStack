@@ -78,6 +78,7 @@ class CreateProfile extends Component {
                       placeholder=" * Handle"
                       onChange={this.onChange}
                       error={errors.handle}
+                      info="A unique handle for your profile.Your full name, company name, nick name."
                     />
                     <TextInputForm
                       name="handle"
@@ -86,9 +87,9 @@ class CreateProfile extends Component {
                       onChange={this.onChange}
                       error={errors.handle}
                     />
-                    <select name="Skills" id="" />
+
                     <input
-                      type="submit"
+                      type=""
                       value="Submit"
                       className="btn btn-lg btn-info"
                     />

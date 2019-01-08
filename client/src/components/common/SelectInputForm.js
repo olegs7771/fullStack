@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const TextInputForm = ({
+const SelectInputForm = ({
   name,
   lable,
   type,
@@ -11,7 +11,8 @@ const TextInputForm = ({
   onChange,
   info,
   error,
-  disabled
+  disabled,
+  options
 }) => {
   return (
     <div className="group-control ">
@@ -31,17 +32,18 @@ const TextInputForm = ({
   );
 };
 
-TextInputForm.defaultProps = {
+SelectInputForm.defaultProps = {
   type: "text"
 };
-TextInputForm.propTypes = {
+SelectInputForm.propTypes = {
   name: PropTypes.string.isRequired,
   lable: PropTypes.string,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   info: PropTypes.string,
   error: PropTypes.string,
-  disabled: PropTypes.string
+  disabled: PropTypes.string,
+  options: PropTypes.array.isRequired
 };
 
-export default TextInputForm;
+export default SelectInputForm;
