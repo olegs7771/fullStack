@@ -1,5 +1,6 @@
 import React from "react";
 import classnames from "classnames";
+import PropTypes from "prop-types";
 
 const TextAreaForm = ({
   name,
@@ -26,7 +27,7 @@ const TextAreaForm = ({
     </div>
   );
 };
-TextInputForm.propTypes = {
+TextAreaForm.propTypes = {
   name: PropTypes.string.isRequired,
 
   placeholder: PropTypes.string,

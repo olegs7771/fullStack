@@ -21,8 +21,16 @@ class Dashboard extends Component {
       dashboardContent = <Spinner />;
     } else {
       //check for profile
-      if (profile === {}) {
+      if (Object.keys(profile).length > 0) {
         //user has profile
+        return (dashboardContent = (
+          <div className="mt-3">
+            <h3>
+              Welcome <small className="muted">{user.name}</small>
+            </h3>
+            <p className="muted">Welcome to your profile {user.name}</p>
+          </div>
+        ));
       } else {
         dashboardContent = (
           <div className="mt-3">
@@ -30,15 +38,8 @@ class Dashboard extends Component {
               Welcome <small className="muted">{user.name}</small>
             </h3>
             <p className="muted">
-              You have not set profile yet. You can create a new profile
-              <Link to="/create-profile">
-                <input
-                  type="submit"
-                  value="here"
-                  className="btn btn-link  "
-                  value="here"
-                />
-              </Link>
+              You have not set profile yet. You can create a new profile{" "}
+              <Link to="/create-profile">here</Link>.
             </p>
           </div>
         );

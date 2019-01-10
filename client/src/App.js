@@ -33,8 +33,8 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     //logout user
     store.dispatch(clearCurrentProfile());
-    //redirect to login
-    window.location.href = "/main";
+
+    localStorage.removeItem("jwtToken");
   }
 }
 class App extends Component {

@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import TextInputForm from "../common/TextInputForm";
+import TextAreaForm from "../common/TextAreaForm";
+import SelectInputForm from "../common/SelectInputForm";
+import InputSocilaForm from "../common/InputSocilaForm";
 import PropTypes from "prop-types";
 import { registerCurrentProfile } from "../../actions/profileAction";
 
@@ -30,13 +33,15 @@ class CreateProfile extends Component {
   // Submit form
 
   registerFormSubmit = e => {
+    const { handle, skills, status } = this.state;
     e.preventDefault();
     console.log("submitted");
-    this.props.registerCurrentProfile();
+    const newProfile = { handle, skills, status };
+    this.props.registerCurrentProfile(newProfile);
+    console.log(newProfile);
   };
 
   render() {
-    console.log(this.props);
     const { user } = this.props.auth;
     const { errors } = this.props;
     console.log(errors);
@@ -57,6 +62,18 @@ class CreateProfile extends Component {
       youtube,
       instagram
     } = this.state;
+    //Select options for status
+    const options = [
+      { label: "* Select Professional status", value: 0 },
+      { label: " Developer", value: "Developer" },
+      { label: " Junior Developer", value: "Junior Developer" },
+      { label: " Senior Developer", value: "Senior Developer" },
+      { label: " Manager", value: "Manager" },
+      { label: " Student or Lernining", value: "Student or Lernining" },
+      { label: " Instructor or Teacher", value: "Instructor or Teacher" },
+      { label: " Intern", value: "Intern" },
+      { label: "Other", value: "Other" }
+    ];
 
     return (
       <div className="main_height">
@@ -78,20 +95,29 @@ class CreateProfile extends Component {
                       placeholder=" * Handle"
                       onChange={this.onChange}
                       error={errors.handle}
-                      info="A unique handle for your profile.Your full name, company name, nick name."
+                      info="A unique handle for your profile URL.Your full name, company name, nick name."
+                    />
+                    <SelectInputForm
+                      name="status"
+                      value={status}
+                      placeholder="Status"
+                      options={options}
+                      onChange={this.onChange}
+                      error={errors.status}
                     />
                     <TextInputForm
-                      name="handle"
-                      value={handle}
-                      placeholder=" * Handle"
+                      name="skills"
+                      value={skills}
+                      placeholder=" * Skills"
                       onChange={this.onChange}
                       error={errors.handle}
+                      info="Please add your skills and use comma ','"
                     />
 
                     <input
-                      type=""
+                      type="submit"
                       value="Submit"
-                      className="btn btn-lg btn-info"
+                      className="btn btn-lg btn-info mt-3"
                     />
                   </form>
                 </div>

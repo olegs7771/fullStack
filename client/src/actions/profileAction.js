@@ -42,9 +42,9 @@ export const clearCurrentProfile = () => {
 };
 //create or update current user profile
 
-export const registerCurrentProfile = () => dispatch => {
+export const registerCurrentProfile = newProfile => dispatch => {
   axios
-    .post("/api/profile/update")
+    .post("/api/profile/update", newProfile)
     .then(res => {
       dispatch({
         type: UPDATE_CURRENT_PROFILE,

@@ -7,26 +7,31 @@ const SelectInputForm = ({
   value,
   placeholder,
   onChange,
-  info,
   error,
-  disabled,
-  options
+  options,
+  type
 }) => {
-  //  const selectOptions= options.map()
+  const selectOptions = options.map(option => (
+    <option key={option.label} value={option.value}>
+      {option.label}
+    </option>
+  ));
 
   return (
-    <div className="group-control ">
-      <input
+    <div className="group-control mt-2 ">
+      <select
         type={type}
         className={classnames("form-control form-control-lg", {
           "is-invalid": error
         })}
         name={name}
         value={value}
-        placeholder={placeholder}
         onChange={onChange}
-      />
-      <small className="form-text text-muted">{info}</small>
+        placeholder={placeholder}
+      >
+        {selectOptions}
+      </select>
+
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
@@ -35,12 +40,16 @@ const SelectInputForm = ({
 SelectInputForm.propTypes = {
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
+
   info: PropTypes.string,
   error: PropTypes.string,
   disabled: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired
+};
+
+SelectInputForm.defaultProps = {
+  type: "text"
 };
 
 export default SelectInputForm;
