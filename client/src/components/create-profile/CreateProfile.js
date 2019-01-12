@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import TextInputForm from "../common/TextInputForm";
 import TextAreaForm from "../common/TextAreaForm";
@@ -23,8 +24,27 @@ class CreateProfile extends Component {
     linkedin: "",
     youtube: "",
     instagram: "",
-    errors: {}
+    errors: {},
+    user: {}
   };
+
+  static getDerivedStateFromProps(props, state) {
+    console.log(props.auth.user);
+    const { user } = props.auth;
+    console.log(user);
+    if (user) {
+      return {
+        user: props.auth.user
+      };
+    }
+
+    //get errors from props into state (of component)
+    const { errors } = state;
+    if (props.errors) {
+      return { errors: props.errors };
+    }
+  }
+
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
@@ -33,21 +53,7 @@ class CreateProfile extends Component {
   // Submit form
 
   registerFormSubmit = e => {
-    const { handle, skills, status } = this.state;
-    e.preventDefault();
-    console.log("submitted");
-    const newProfile = { handle, skills, status };
-    this.props.registerCurrentProfile(newProfile);
-    console.log(newProfile);
-  };
-
-  render() {
-    const { user } = this.props.auth;
-    const { errors } = this.props;
-    console.log(errors);
-
     const {
-      displaySocialInput,
       handle,
       company,
       website,
@@ -62,6 +68,47 @@ class CreateProfile extends Component {
       youtube,
       instagram
     } = this.state;
+    e.preventDefault();
+    console.log("submitted");
+    const newProfile = {
+      handle,
+      company,
+      website,
+      location,
+      status,
+      skills,
+      githubusername,
+      bio,
+      twitter,
+      facebook,
+      linkedin,
+      youtube,
+      instagram
+    };
+    this.props.registerCurrentProfile(newProfile, this.props.history);
+    console.log(newProfile);
+  };
+
+  render() {
+    const {
+      displaySocialInput,
+      handle,
+      company,
+      website,
+      location,
+      status,
+      skills,
+      githubusername,
+      bio,
+      twitter,
+      facebook,
+      linkedin,
+      youtube,
+      instagram,
+      errors,
+      user
+    } = this.state;
+
     //Select options for status
     const options = [
       { label: "* Select Professional status", value: 0 },
@@ -76,7 +123,7 @@ class CreateProfile extends Component {
     ];
 
     return (
-      <div className="main_height">
+      <div>
         <div className="container">
           <div className="row">
             <div className="col-md-12 mx-auto">
@@ -111,8 +158,105 @@ class CreateProfile extends Component {
                       placeholder=" * Skills"
                       onChange={this.onChange}
                       error={errors.handle}
-                      info="Please add your skills and use comma ','"
+                      info="Please use comma separated values (eg. HTML,CSS,PHP,JavaScrypt)"
                     />
+                    <TextInputForm
+                      name="company"
+                      value={company}
+                      placeholder=" Company"
+                      onChange={this.onChange}
+                      error={errors.company}
+                      info="Coudld be your own company or one you work for"
+                    />
+                    <TextInputForm
+                      name="website"
+                      value={website}
+                      placeholder=" Website"
+                      onChange={this.onChange}
+                      error={errors.website}
+                      info="Coudld be your own company website"
+                    />
+                    <TextInputForm
+                      name="location"
+                      value={location}
+                      placeholder="Location"
+                      onChange={this.onChange}
+                      error={errors.location}
+                      info="City & State"
+                    />
+                    <TextInputForm
+                      name="githubusername"
+                      value={githubusername}
+                      placeholder="GitHub Username"
+                      onChange={this.onChange}
+                      error={errors.githubusername}
+                      info="If you want your latest repos and aGithub link, include your username"
+                    />
+                    <TextAreaForm
+                      name="bio"
+                      value={bio}
+                      placeholder="Short Bio"
+                      onChange={this.onChange}
+                      error={errors.bio}
+                      info="Tell us a little about yourself"
+                    />
+                    <div className="mb-3">
+                      <button
+                        type="button"
+                        className="btn btn-light mt-3"
+                        onClick={() => {
+                          this.setState({
+                            displaySocialInput: !this.state.displaySocialInput
+                          });
+                        }}
+                      >
+                        Add Social Network Links
+                      </button>{" "}
+                    </div>
+                    {displaySocialInput ? (
+                      <div>
+                        <InputSocilaForm
+                          name="twitter"
+                          value={twitter}
+                          placeholder="Twitter Profile URL"
+                          error={errors.twitter}
+                          icon="fab fa-twitter"
+                          onChange={this.onChange}
+                        />
+                        <InputSocilaForm
+                          name="facebook"
+                          value={facebook}
+                          placeholder="Facebook Profile URL"
+                          error={errors.facebook}
+                          icon="fab fa-facebook"
+                          onChange={this.onChange}
+                        />
+                        <InputSocilaForm
+                          name="linkedin"
+                          value={linkedin}
+                          placeholder="Linkedin Profile URL"
+                          error={errors.linkedin}
+                          icon="fab fa-linkedin"
+                          onChange={this.onChange}
+                        />
+                        <InputSocilaForm
+                          name="youtube"
+                          value={youtube}
+                          placeholder="Youtube Channel URL"
+                          error={errors.youtube}
+                          icon="fab fa-youtube"
+                          onChange={this.onChange}
+                        />
+                        <InputSocilaForm
+                          name="instagram"
+                          value={instagram}
+                          placeholder="Instagram Profile URL "
+                          error={errors.instagram}
+                          icon="fab fa-instagram"
+                          onChange={this.onChange}
+                        />
+                      </div>
+                    ) : null}
 
                     <input
                       type="submit"
@@ -144,4 +288,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { registerCurrentProfile }
-)(CreateProfile);
+)(withRouter(CreateProfile));

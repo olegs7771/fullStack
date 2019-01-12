@@ -14,7 +14,7 @@ const InputSocilaForm = ({
   icon
 }) => {
   return (
-    <div className="group-control mb-3">
+    <div className="input-group mb-3">
       <div className="input-group-prepend">
         <span className="input-group-text">
           <i className={icon} />
@@ -45,7 +45,7 @@ InputSocilaForm.propTypes = {
   lable: PropTypes.string,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  icon: PropTypes.string.Required,
+  // icon: PropTypes.string.Required,
   error: PropTypes.string,
   disabled: PropTypes.string
 };

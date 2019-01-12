@@ -302,5 +302,18 @@ router.delete(
     });
   }
 );
+// @ Route DELETE   api/profile/delete/:delete_id
+// @ Desc deletes Profile by id
+// @ Access Private
+
+router.delete(
+  "/delete_profile/:_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id }).then(() => {
+      res.json({ success: true });
+    });
+  }
+);
 
 module.exports = router;

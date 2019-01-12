@@ -25,8 +25,9 @@ class Header extends Component {
               src={user.avatar}
               alt={user.name}
               style={{ width: "25px" }}
-              className="rounded-circle"
+              className="rounded-circle mr-2"
             />
+            {user.name}
           </Link>
         </li>
         <li className="nav-item">
@@ -65,7 +66,7 @@ class Header extends Component {
           <nav className="navbar navbar-expand-lg mr-auto ">
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0 ">
               <li className="nav-item">
-                <Link to="/" className="nav-link">
+                <Link to="/developers" className="nav-link">
                   Developers
                 </Link>
               </li>

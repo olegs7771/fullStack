@@ -4,12 +4,18 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
+import ProfileActions from "./ProfileActions";
 
 class Dashboard extends Component {
   componentDidMount() {
     console.log(this.props);
     this.props.getCurrentProfile();
   }
+  //Delete profile
+  deleteProfileHandle = e => {
+    e.preventDefault();
+    console.log("deleted");
+  };
 
   render() {
     console.log(this.props);
@@ -23,14 +29,26 @@ class Dashboard extends Component {
       //check for profile
       if (Object.keys(profile).length > 0) {
         //user has profile
-        return (dashboardContent = (
+        dashboardContent = (
           <div className="mt-3">
             <h3>
-              Welcome <small className="muted">{user.name}</small>
+              Welcome{" "}
+              <small className="muted">
+                <Link to={`/profile/${profile.handle}`}> {user.name} </Link>
+              </small>
             </h3>
-            <p className="muted">Welcome to your profile {user.name}</p>
+            <ProfileActions />
+            {/* TODO:exp and edu */}
+            <div style={{ marginBottom: "60px" }}>
+              <button
+                className="btn btn-danger"
+                onClick={this.deleteProfileHandle}
+              >
+                Delete My Account
+              </button>
+            </div>
           </div>
-        ));
+        );
       } else {
         dashboardContent = (
           <div className="mt-3">

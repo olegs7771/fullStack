@@ -17,6 +17,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
+import Developers from "./components/developers/Developers";
 import "./App.css";
 
 //check for token
@@ -63,6 +64,7 @@ class App extends Component {
                   path="/create-profile"
                   component={userIsAuthenticated(CreateProfile)}
                 />
+                <Route exact path="/developers" component={Developers} />
               </Switch>
             </div>
             <Footer />

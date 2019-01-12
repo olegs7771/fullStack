@@ -6,7 +6,8 @@ import {
   PROFILE_LOADING,
   GET_ERRORS,
   CLEAR_CURRENT_PROFILE,
-  UPDATE_CURRENT_PROFILE
+  UPDATE_CURRENT_PROFILE,
+  GET_PROFILES
 } from "./types";
 
 //get current profile
@@ -42,12 +43,31 @@ export const clearCurrentProfile = () => {
 };
 //create or update current user profile
 
-export const registerCurrentProfile = newProfile => dispatch => {
+export const registerCurrentProfile = (newProfile, history) => dispatch => {
   axios
     .post("/api/profile/update", newProfile)
     .then(res => {
       dispatch({
         type: UPDATE_CURRENT_PROFILE,
+        payload: res.data
+      });
+    })
+    .then(() => history.push("/dashboard"))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+
+//get all profiles
+export const getAllProfiles = () => dispatch => {
+  axios
+    .get("/api/profile/all")
+    .then(res => {
+      dispatch({
+        type: GET_PROFILES,
         payload: res.data
       });
     })
@@ -58,3 +78,5 @@ export const registerCurrentProfile = newProfile => dispatch => {
       });
     });
 };
+//delete profile by id
+export const deleteProfile = () => {};
