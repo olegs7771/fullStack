@@ -7,7 +7,8 @@ import {
   GET_ERRORS,
   CLEAR_CURRENT_PROFILE,
   UPDATE_CURRENT_PROFILE,
-  GET_PROFILES
+  GET_PROFILES,
+  SET_CURRENT_USER
 } from "./types";
 
 //get current profile
@@ -78,5 +79,24 @@ export const getAllProfiles = () => dispatch => {
       });
     });
 };
-//delete profile by id
-export const deleteProfile = () => {};
+
+//delete account and profile
+
+export const deleteProfile = (_id, history) => dispatch => {
+  if (window.confirm("Are you sure? This can NOT be undone!")) {
+    axios
+      .delete("/api/profile/delete/:id")
+      .then(res => {
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: {}
+        });
+      })
+      .catch(err => {
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        });
+      });
+  }
+};

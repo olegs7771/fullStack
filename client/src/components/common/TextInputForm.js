@@ -10,8 +10,7 @@ const TextInputForm = ({
   placeholder,
   onChange,
   info,
-  error,
-  disabled
+  error
 }) => {
   return (
     <div className="group-control mt-3 ">

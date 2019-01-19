@@ -5,12 +5,18 @@ import TextInputForm from "../common/TextInputForm";
 import TextAreaForm from "../common/TextAreaForm";
 import SelectInputForm from "../common/SelectInputForm";
 import InputSocilaForm from "../common/InputSocilaForm";
+import isEmpty from "../../validation/is_Empty";
 import PropTypes from "prop-types";
-import { registerCurrentProfile } from "../../actions/profileAction";
+import {
+  registerCurrentProfile,
+  getCurrentProfile
+} from "../../actions/profileAction";
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
   state = {
     displaySocialInput: false,
+    user: {},
+
     handle: "",
     company: "",
     website: "",
@@ -24,32 +30,57 @@ class CreateProfile extends Component {
     linkedin: "",
     youtube: "",
     instagram: "",
-    errors: {},
-    user: {}
+
+    errors: {}
   };
-
-  static getDerivedStateFromProps(props, state) {
-    console.log(props);
-
-    console.log(props.auth.user);
-    const { user } = props.auth;
-    console.log(user);
-    if (user) {
-      return {
-        user: props.auth.user,
-        errors: props.errors
-      };
-    }
-  }
 
   onChange = e => {
     this.setState({
       [e.target.name]: e.target.value
     });
   };
+
+  // static getDerivedStateFromProps(props, state) {
+  //   console.log("getDerivedStateFromProps");
+
+  //   if (props.profile !== state.profile) {
+  //     return props.profile;
+  //   } else {
+  //     return null;
+  //   }
+  // }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate");
+
+    if (this.props.profile.profile !== prevProps.profile.profile) {
+      let skillsCSV = this.props.profile.profile.skills.join(",");
+      const profile = this.props.profile.profile;
+
+      console.log(profile.company);
+
+      this.setState({
+        handle: this.props.profile.profile.handle,
+        skills: skillsCSV,
+        status: profile.status,
+        company: profile.company,
+        website: profile.website,
+        location: profile.location,
+        githubusername: profile.githubusername,
+        bio: profile.bio
+      });
+    }
+  }
+
+  //load current profile
+  componentDidMount() {
+    this.props.getCurrentProfile();
+  }
+
   // Submit form
 
   registerFormSubmit = e => {
+    e.preventDefault();
     const {
       handle,
       company,
@@ -65,11 +96,13 @@ class CreateProfile extends Component {
       youtube,
       instagram
     } = this.state;
-    e.preventDefault();
-    console.log("submitted");
+
+    let companyEmty = !isEmpty(company) ? company : "";
+    console.log(company);
+
     const newProfile = {
       handle,
-      company,
+      company: companyEmty,
       website,
       location,
       status,
@@ -82,6 +115,9 @@ class CreateProfile extends Component {
       youtube,
       instagram
     };
+
+    console.log(this.state);
+
     this.props.registerCurrentProfile(newProfile, this.props.history);
     console.log(newProfile);
   };
@@ -105,7 +141,6 @@ class CreateProfile extends Component {
       errors,
       user
     } = this.state;
-    console.log(errors);
 
     //Select options for status
     const options = [
@@ -271,11 +306,13 @@ class CreateProfile extends Component {
     );
   }
 }
-CreateProfile.propTypes = {
-  auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
+// EditProfile.propTypes = {
+//   auth: PropTypes.object.isRequired,
+//   profile: PropTypes.object.isRequired,
+//   errors: PropTypes.object.isRequired,
+//   getCurrentProfile: PropTypes.func.isRequired,
+//   registerCurrentProfile: PropTypes.func.isRequired
+// };
 
 const mapStateToProps = state => ({
   auth: state.auth,
@@ -285,5 +322,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { registerCurrentProfile }
-)(withRouter(CreateProfile));
+  { registerCurrentProfile, getCurrentProfile }
+)(withRouter(EditProfile));

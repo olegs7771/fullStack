@@ -12,7 +12,7 @@ const SelectInputForm = ({
   type
 }) => {
   const selectOptions = options.map(option => (
-    <option key={option.label} value={option.value}>
+    <option key={option.label} value={option.value} defaultValue={option.value}>
       {option.label}
     </option>
   ));
@@ -44,7 +44,7 @@ SelectInputForm.propTypes = {
   info: PropTypes.string,
   error: PropTypes.string,
   disabled: PropTypes.string,
-  onChange: PropTypes.func.isRequired,
+
   options: PropTypes.array.isRequired
 };
 

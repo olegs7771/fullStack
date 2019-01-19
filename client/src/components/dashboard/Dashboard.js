@@ -1,28 +1,33 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentProfile } from "../../actions/profileAction";
+import { getCurrentProfile, deleteProfile } from "../../actions/profileAction";
+
 import Spinner from "../layout/Spinner";
 import ProfileActions from "./ProfileActions";
 
 class Dashboard extends Component {
   componentDidMount() {
-    console.log(this.props);
     this.props.getCurrentProfile();
   }
   //Delete profile
   deleteProfileHandle = e => {
+    console.log(this.props);
+    const { _id } = this.props.profile.profile;
+
     e.preventDefault();
-    console.log("deleted");
+    console.log("deleted :" + _id);
+    this.props.deleteProfile(_id, this.props.history);
   };
 
   render() {
-    console.log(this.props);
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
 
     let dashboardContent;
+
     if (profile === null || loading) {
       dashboardContent = <Spinner />;
     } else {
@@ -37,7 +42,7 @@ class Dashboard extends Component {
                 <Link to={`/profile/${profile.handle}`}> {user.name} </Link>
               </small>
             </h3>
-            <ProfileActions />
+            <ProfileActions id={profile.handle} />
             {/* TODO:exp and edu */}
             <div style={{ marginBottom: "60px" }}>
               <button
@@ -82,6 +87,8 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
+  message: PropTypes.object,
+  deleteProfile: PropTypes.func.isRequired,
 
   getCurrentProfile: PropTypes.func.isRequired
 };
@@ -89,10 +96,11 @@ Dashboard.propTypes = {
 const mapStateToProps = state => ({
   profile: state.profile,
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  message: state.profile.message
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
-)(Dashboard);
+  { getCurrentProfile, deleteProfile }
+)(withRouter(Dashboard));

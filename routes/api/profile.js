@@ -44,15 +44,13 @@ router.get("/handle/:handle", (req, res) => {
     //req.params.handle and try to find it in db
     .populate("user", ["name", "avatar"])
     .then(profile => {
-      if (!profile) {
-        errors.noprofile = "No profile for this user";
-        res.status(404).json(errors);
+      if (profile) {
+        res.status(200).json(profile);
+      } else {
+        res.status(404).json({ error: "No profile for this handle" });
       }
-
-      console.log("profile");
-      res.json(profile);
     })
-    .catch(err => res.json(err));
+    .catch(err => res.status(400).json(err));
 });
 // @route GET api/profile/user/:user_id
 // @desc  get profile by ID
@@ -117,17 +115,46 @@ router.post(
     profileFields.user = req.user.id; //<---logged in user
     if (req.body.handle) profileFields.handle = req.body.handle; //checking if req.body.handle came from form
     if (req.body.handle) profileFields.handle = req.body.handle;
-    if (req.body.company) profileFields.company = req.body.company;
-    if (req.body.website) profileFields.website = req.body.website;
-    if (req.body.location) profileFields.location = req.body.location;
+
+    ///company
+    if (req.body.company.length == 0) {
+      profileFields.company = "";
+    } else {
+      profileFields.company = req.body.company;
+    }
+    //website
+    if (req.body.website.length == 0) {
+      profileFields.website = "";
+    } else {
+      profileFields.website = req.body.website;
+    }
+
+    ///location
+    if (req.body.location.length == 0) {
+      profileFields.location = "";
+    } else {
+      profileFields.location = req.body.location;
+    }
+
     if (req.body.status) profileFields.status = req.body.status;
     //Skills we split into array(cause it came as comma separated value)
     if (typeof req.body.skills !== "undefined") {
       profileFields.skills = req.body.skills.split(",");
     }
-    if (req.body.bio) profileFields.bio = req.body.bio;
-    if (req.body.githubusername)
+
+    ///bio
+    if (req.body.bio.length == 0) {
+      profileFields.bio = "";
+    } else {
+      profileFields.bio = req.body.bio;
+    }
+    ///GitHub username
+    if (req.body.githubusername.length == 0) {
+      profileFields.githubusername = "";
+    } else {
       profileFields.githubusername = req.body.githubusername;
+    }
+
     //Social has its own object
     profileFields.social = {};
     if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
@@ -310,9 +337,11 @@ router.delete(
   "/delete_profile/:_id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Profile.findOneAndRemove({ user: req.user.id }).then(() => {
-      res.json({ success: true });
-    });
+    Profile.findOneAndRemove({ user: req.user.id })
+      .then(() => {
+        res.json({ msg: "Your Profile was successfully deleted." });
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 

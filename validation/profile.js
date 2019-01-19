@@ -26,8 +26,8 @@ module.exports = function validateProfileInput(data) {
   if (!isEmpty(data.website)) {
     if (!Validator.isURL(data.website)) errors.website = "Not a Valid URL";
   }
-  if (!isEmpty(data.wesite)) {
-    if (!Validator.isURL(data.wesite)) errors.website = "Not a Valid URL";
+  if (!isEmpty(data.youtube)) {
+    if (!Validator.isURL(data.youtube)) errors.youtube = "Not a Valid URL";
   }
   if (!isEmpty(data.twitter)) {
     if (!Validator.isURL(data.twitter)) errors.twitter = "Not a Valid URL";
