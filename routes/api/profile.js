@@ -224,6 +224,7 @@ router.post(
         //Add experience to array.We are using unshift() to put in the biggining of array.
 
         profile.experience.unshift(newExp);
+<<<<<<< HEAD
         profile
           .save()
           .then(profile => {
@@ -231,6 +232,13 @@ router.post(
           })
           .catch(err => res.status(400).json(err));
       });
+=======
+        profile.save().then(profile => {
+          res.json(profile);
+        });
+      })
+      .catch(err => res.status(400).json(err));
+>>>>>>> 542cf8e33d35ddeee146aadfa60e90f41c68c2a5
   }
 );
 // @route POST api/profile/education

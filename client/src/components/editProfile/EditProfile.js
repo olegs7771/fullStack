@@ -40,15 +40,16 @@ class EditProfile extends Component {
     });
   };
 
-  // static getDerivedStateFromProps(props, state) {
-  //   console.log("getDerivedStateFromProps");
-
-  //   if (props.profile !== state.profile) {
-  //     return props.profile;
-  //   } else {
-  //     return null;
-  //   }
-  // }
+  static getDerivedStateFromProps(props, state) {
+    if (props.errors !== state.errors || props.auth.user !== state.user) {
+      return {
+        errors: props.errors,
+        user: props.auth.user
+      };
+    } else {
+      return null;
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     console.log("componentDidUpdate");

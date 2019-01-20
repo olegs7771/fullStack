@@ -42,7 +42,7 @@ class Dashboard extends Component {
                 <Link to={`/profile/${profile.handle}`}> {user.name} </Link>
               </small>
             </h3>
-            <ProfileActions id={profile.handle} />
+            <ProfileActions name={user.name} />
             {/* TODO:exp and edu */}
             <div style={{ marginBottom: "60px" }}>
               <button
