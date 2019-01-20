@@ -227,7 +227,8 @@ router.post(
         profile.save().then(profile => {
           res.json(profile);
         });
-      });
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 // @route POST api/profile/education

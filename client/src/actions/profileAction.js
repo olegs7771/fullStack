@@ -61,6 +61,8 @@ export const registerCurrentProfile = (newProfile, history) => dispatch => {
       });
     });
 };
+//edit experience in current profile
+export const editExperience = (_id, history, newExp) => {};
 
 //get all profiles
 export const getAllProfiles = () => dispatch => {
