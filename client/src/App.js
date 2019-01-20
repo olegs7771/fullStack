@@ -73,7 +73,7 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/edit-exp/:id"
+                  path="/edit-exp"
                   component={userIsAuthenticated(AddExperience)}
                 />
               </Switch>
