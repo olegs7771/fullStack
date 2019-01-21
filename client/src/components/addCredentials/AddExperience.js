@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
-import moduleName from "module";
+
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileAction";
-import { log } from "util";
-import { format } from "url";
+import TextInputForm from "../common/TextInputForm";
 
 class AddExperience extends Component {
   state = {
@@ -14,7 +13,8 @@ class AddExperience extends Component {
     from: "",
     to: "",
     current: false,
-    description: ""
+    description: "",
+    errors: {}
   };
 
   componentDidMount() {
@@ -25,7 +25,7 @@ class AddExperience extends Component {
     const { profile, loading } = this.props.profile;
     let expForm;
 
-    if (profile === null || loading === true) {
+    if (profile === null) {
       expForm = <h4>Loading..</h4>;
     } else {
       expForm = <h3>{profile.handle}</h3>;
@@ -35,11 +35,54 @@ class AddExperience extends Component {
       <div className="main_height">
         <div className="row">
           <div className="col-md-12 mx-auto">
-            <div className="card">
+            <div className="card mt-4">
               <div className="card-body">
                 <div className="card-heading text-center">{expForm}</div>
                 <div className="container">
-                  <form onSubmit={this.submitFromExp} />
+                  <form onSubmit={this.submitFromExp}>
+                    <TextInputForm
+                      name="title"
+                      value={this.state.title}
+                      placeholder="Title"
+                      onChange={this.onChange}
+                      info="Put here the your title at the company "
+                      error={this.state.errors.title}
+                    />
+                    <TextInputForm
+                      name="company"
+                      value={this.state.company}
+                      placeholder="Company"
+                      onChange={this.onChange}
+                      info="Put here the name of the company or organization that you have been  working at"
+                      error={this.state.errors.company}
+                    />
+                    <TextInputForm
+                      name="location"
+                      value={this.state.location}
+                      placeholder="Location or Address"
+                      onChange={this.onChange}
+                      error={this.state.errors.location}
+                    />
+                    <TextInputForm
+                      name="title"
+                      value={this.state.title}
+                      placeholder="Title"
+                      onChange={this.onChange}
+                      info="Put here the name of the company or organization that you workin at"
+                      error={this.state.errors.title}
+                    />
+                    <TextInputForm
+                      name="from"
+                      value={this.state.from}
+                      placeholder="From"
+                      onChange={this.onChange}
+                      info=""
+                      error={this.state.errors.from}
+                    />
+                    <button className="btn btn-light btn-block mt-3">
+                      Submit
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
