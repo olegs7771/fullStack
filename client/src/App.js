@@ -35,7 +35,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     //logout user
-    store.dispatch(clearCurrentProfile());
+    // store.dispatch(clearCurrentProfile());
 
     localStorage.removeItem("jwtToken");
   }
@@ -73,7 +73,7 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/edit-exp/:id"
+                  path="/edit-exp"
                   component={userIsAuthenticated(AddExperience)}
                 />
               </Switch>
