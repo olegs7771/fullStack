@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import moduleName from "module";
 import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileAction";
 import { log } from "util";
@@ -57,4 +58,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getCurrentProfile }
-)(AddExperience);
+)(withRouter(AddExperience));
