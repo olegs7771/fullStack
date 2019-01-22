@@ -12,7 +12,7 @@ const TextAreaForm = ({
   error
 }) => {
   return (
-    <div className="group-control ">
+    <div className="group-control mt-3 ">
       <textarea
         className={classnames("form-control form-control-lg", {
           "is-invalid": error
