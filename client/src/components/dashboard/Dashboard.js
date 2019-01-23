@@ -4,9 +4,10 @@ import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentProfile, deleteProfile } from "../../actions/profileAction";
-
+//layout
 import Spinner from "../layout/Spinner";
 import ProfileActions from "./ProfileActions";
+import MainProfile from "./MainProfile";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -42,6 +43,7 @@ class Dashboard extends Component {
                 <Link to={`/profile/${profile.handle}`}> {user.name} </Link>
               </small>
             </h3>
+            <MainProfile />
             <ProfileActions name={user.name} />
             {/* TODO:exp and edu */}
             <div style={{ marginBottom: "60px" }}>

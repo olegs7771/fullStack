@@ -8,7 +8,9 @@ import {
   CLEAR_CURRENT_PROFILE,
   UPDATE_CURRENT_PROFILE,
   GET_PROFILES,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  EDIT_EXPERIENCE,
+  EDIT_EDUCATION
 } from "./types";
 
 //get current profile
@@ -62,7 +64,40 @@ export const registerCurrentProfile = (newProfile, history) => dispatch => {
     });
 };
 //edit experience in current profile
-export const editExperience = (_id, history, newExp) => {};
+export const editExperience = (newExp, history) => dispatch => {
+  axios
+    .post("/api/profile/exp", newExp)
+    .then(res => {
+      dispatch({
+        type: EDIT_EXPERIENCE,
+        payload: res.data
+      });
+    })
+    .then(() => history.push("/dashboard"))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+export const editEducation = (newEdu, history) => dispatch => {
+  axios
+    .post("/api/profile/edu", newEdu)
+    .then(res => {
+      dispatch({
+        type: EDIT_EDUCATION,
+        payload: res.data
+      });
+    })
+    .then(() => history.push("/dashboard"))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 
 //get all profiles
 export const getAllProfiles = () => dispatch => {

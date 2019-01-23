@@ -5,7 +5,7 @@ import { userIsAuthenticated, userIsNotAuthenticated } from "./authWrapper";
 import jwt_decode from "jwt-decode"; //decode token
 import setAuthToken from "./utils/setAuthToken"; // setting  token to header as Authorization( like in postman)
 import { setCurrentUser } from "./actions/authAction"; //will send action to set state auth.user:{}
-import { clearCurrentProfile } from "./actions/profileAction";
+// import { clearCurrentProfile } from "./actions/profileAction";
 
 //redux
 import { Provider } from "react-redux";
@@ -19,6 +19,7 @@ import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/editProfile/EditProfile";
 import AddExperience from "./components/addCredentials/AddExperience";
+import AddEducation from "./components/addCredentials/AddEducation";
 
 import "./App.css";
 
@@ -75,6 +76,11 @@ class App extends Component {
                   exact
                   path="/edit-exp"
                   component={userIsAuthenticated(AddExperience)}
+                />
+                <Route
+                  exact
+                  path="/edit-edu"
+                  component={userIsAuthenticated(AddEducation)}
                 />
               </Switch>
             </div>

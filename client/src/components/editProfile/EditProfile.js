@@ -58,8 +58,6 @@ class EditProfile extends Component {
       let skillsCSV = this.props.profile.profile.skills.join(",");
       const profile = this.props.profile.profile;
 
-      console.log(profile.company);
-
       this.setState({
         handle: this.props.profile.profile.handle,
         skills: skillsCSV,
@@ -99,7 +97,6 @@ class EditProfile extends Component {
     } = this.state;
 
     let companyEmty = !isEmpty(company) ? company : "";
-    console.log(company);
 
     const newProfile = {
       handle,
@@ -120,7 +117,6 @@ class EditProfile extends Component {
     console.log(this.state);
 
     this.props.registerCurrentProfile(newProfile, this.props.history);
-    console.log(newProfile);
   };
 
   render() {
@@ -307,13 +303,13 @@ class EditProfile extends Component {
     );
   }
 }
-// EditProfile.propTypes = {
-//   auth: PropTypes.object.isRequired,
-//   profile: PropTypes.object.isRequired,
-//   errors: PropTypes.object.isRequired,
-//   getCurrentProfile: PropTypes.func.isRequired,
-//   registerCurrentProfile: PropTypes.func.isRequired
-// };
+EditProfile.propTypes = {
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  registerCurrentProfile: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   auth: state.auth,

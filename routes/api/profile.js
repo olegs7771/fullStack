@@ -262,9 +262,12 @@ router.post(
         //Add education to array.We are using unshift() to put in the biggining of array.
 
         profile.education.unshift(newEdu);
-        profile.save().then(profile => {
-          res.json(profile);
-        });
+        profile
+          .save()
+          .then(profile => {
+            res.json(profile);
+          })
+          .catch(err => res.status(400).json(err));
       });
   }
 );
@@ -274,7 +277,7 @@ router.post(
 // @ Access Private
 
 router.delete(
-  "/exp/:exp_id",
+  "/exp/:exp",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log("deleting...");
