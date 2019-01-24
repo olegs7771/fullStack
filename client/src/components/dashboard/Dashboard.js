@@ -8,6 +8,8 @@ import { getCurrentProfile, deleteProfile } from "../../actions/profileAction";
 import Spinner from "../layout/Spinner";
 import ProfileActions from "./ProfileActions";
 import MainProfile from "./MainProfile";
+import ExperienceProfile from "./ExperienceProfile";
+import EducationProfile from "./EducationProfile";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -35,15 +37,57 @@ class Dashboard extends Component {
       //check for profile
       if (Object.keys(profile).length > 0) {
         //user has profile
+        console.log(profile);
         dashboardContent = (
           <div className="mt-3">
             <h3>
               Welcome{" "}
               <small className="muted">
-                <Link to={`/profile/${profile.handle}`}> {user.name} </Link>
+                <Link to="/profile"> {user.name} </Link>
               </small>
             </h3>
-            <MainProfile />
+            <hr />
+            <MainProfile
+              handle={profile.handle}
+              profStatus={profile.status}
+              skills={profile.skills.join(",")}
+              company={profile.company}
+              website={profile.website}
+              location={profile.location}
+              githubusername={profile.githubusername}
+            />
+            <hr />
+            {/* {Experience & Educacation } */}
+
+            <div className="row">
+              <div className="col">
+                {profile.experience.map((item, i) => (
+                  <ExperienceProfile
+                    key={i}
+                    title={item.title}
+                    company={item.company}
+                    from={item.from}
+                    to={item.to}
+                    description={item.description}
+                  />
+                ))}
+              </div>
+              <div className="col">
+                {profile.education.map((item, id) => (
+                  <EducationProfile
+                    key={id}
+                    school={item.school}
+                    degree={item.degree}
+                    fieldofstudy={item.fieldofstudy}
+                    from={item.from}
+                    to={item.to}
+                    description={item.description}
+                  />
+                ))}
+              </div>
+            </div>
+            <hr />
+
             <ProfileActions name={user.name} />
             {/* TODO:exp and edu */}
             <div style={{ marginBottom: "60px" }}>
@@ -72,7 +116,7 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="main_height">
+      <div className="">
         <div className="container mt-4">
           <div className="row">
             <div className="col-md-12 mx-auto">

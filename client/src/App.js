@@ -69,7 +69,7 @@ class App extends Component {
                 />
                 <Route
                   exact
-                  path="/edit-profile/:id"
+                  path="/edit-profile"
                   component={userIsAuthenticated(EditProfile)}
                 />
                 <Route

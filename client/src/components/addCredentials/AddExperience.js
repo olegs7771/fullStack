@@ -85,7 +85,12 @@ class AddExperience extends Component {
     if (profile === null) {
       expForm = <h4>Loading..</h4>;
     } else {
-      expForm = <h3>{profile.handle}</h3>;
+      expForm = (
+        <span className="lead">
+          {" "}
+          Dear {profile.handle} add some experience here
+        </span>
+      );
     }
 
     return (
