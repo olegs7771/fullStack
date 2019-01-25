@@ -10,7 +10,8 @@ import {
   GET_PROFILES,
   SET_CURRENT_USER,
   EDIT_EXPERIENCE,
-  EDIT_EDUCATION
+  EDIT_EDUCATION,
+  DELETE_EXPERIENCE
 } from "./types";
 
 //get current profile
@@ -136,4 +137,23 @@ export const deleteProfile = (_id, history) => dispatch => {
         });
       });
   }
+};
+
+//delete experience from profile by id
+export const deleteExp = (_id, history) => dispatch => {
+  axios
+    .delete(`/api/profile/exp/${_id}`)
+    .then(res => {
+      dispatch({
+        type: DELETE_EXPERIENCE,
+        payload: res.data
+      });
+    })
+    .then(() => history.push("/dashboard"))
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
 };

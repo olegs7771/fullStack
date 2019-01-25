@@ -59,34 +59,31 @@ class Dashboard extends Component {
             <hr />
             {/* {Experience & Educacation } */}
 
-            <div className="row">
-              <div className="col">
-                {profile.experience.map((item, i) => (
-                  <ExperienceProfile
-                    key={i}
-                    title={item.title}
-                    company={item.company}
-                    from={item.from}
-                    to={item.to}
-                    description={item.description}
-                  />
-                ))}
-              </div>
-              <div className="col">
-                {profile.education.map((item, id) => (
-                  <EducationProfile
-                    key={id}
-                    school={item.school}
-                    degree={item.degree}
-                    fieldofstudy={item.fieldofstudy}
-                    from={item.from}
-                    to={item.to}
-                    description={item.description}
-                  />
-                ))}
-              </div>
-            </div>
-            <hr />
+            <h5 className="text-center text-muted">Experience</h5>
+            {profile.experience.map((item, i) => (
+              <ExperienceProfile
+                key={i}
+                title={item.title}
+                company={item.company}
+                from={item.from}
+                to={item.to}
+                description={item.description}
+                _id={item._id}
+              />
+            ))}
+
+            <h5 className="text-center text-muted">Education</h5>
+            {profile.education.map((item, id) => (
+              <EducationProfile
+                key={id}
+                school={item.school}
+                degree={item.degree}
+                fieldofstudy={item.fieldofstudy}
+                from={item.from}
+                to={item.to}
+                description={item.description}
+              />
+            ))}
 
             <ProfileActions name={user.name} />
             {/* TODO:exp and edu */}

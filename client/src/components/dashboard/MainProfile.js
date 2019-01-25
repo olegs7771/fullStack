@@ -9,9 +9,9 @@ class MainProfile extends Component {
     console.log(this.props);
     return (
       <div className="container my-3 ">
-        <div className="row">
+        <div className="row justify-content-md-center">
           {/* {main profile picture from avatar} */}
-          <div className="col-md-4 pr-4">
+          <div className="col-md-2">
             <img
               src={user.avatar}
               alt={user.name}
@@ -20,63 +20,30 @@ class MainProfile extends Component {
             />{" "}
           </div>
           {/* {main profile credentials} */}
-          <div className="col-md-8">
+          <div className=" col-md-10">
             <div className="text-center h4 text-muted my-3">Basic Info</div>
-            <table className="table table-borderless">
+            <table className="table ">
+              <thead>
+                <tr>
+                  <th scope="col">Handle</th>
+                  <th scope="col">Prof Status</th>
+                  <th scope="col">Skills</th>
+                  <th scope="col">Company</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">GitHub User</th>
+                  <th scope="col">Web site</th>
+                </tr>
+              </thead>
+
               <tbody>
                 <tr>
-                  <td>
-                    {" "}
-                    <span className="text-muted ">Handle</span>
-                  </td>
-                  <td>
-                    <span>{this.props.handle}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {" "}
-                    <span className="text-muted ">Professional Status</span>
-                  </td>
-                  <td>
-                    <span>{this.props.profStatus}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {" "}
-                    <span className="text-muted ">Skills</span>
-                  </td>
-                  <td>
-                    <span>{this.props.skills}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {" "}
-                    <span className="text-muted ">Company</span>
-                  </td>
-                  <td>
-                    <span>{this.props.company}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {" "}
-                    <span className="text-muted ">Location</span>
-                  </td>
-                  <td>
-                    <span>{this.props.location}</span>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    {" "}
-                    <span className="text-muted ">GitHub User</span>
-                  </td>
-                  <td>
-                    <span>{this.props.githubusername}</span>
-                  </td>
+                  <td className="text-muted">{this.props.handle}</td>
+                  <td className="text-muted">{this.props.profStatus}</td>
+                  <td className="text-muted">{this.props.skills}</td>
+                  <td className="text-muted">{this.props.company}</td>
+                  <td className="text-muted">{this.props.location}</td>
+                  <td className="text-muted">{this.props.githubusername}</td>
+                  <td className="text-muted">{this.props.website}</td>
                 </tr>
               </tbody>
             </table>

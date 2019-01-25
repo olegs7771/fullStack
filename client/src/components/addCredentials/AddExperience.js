@@ -16,8 +16,7 @@ class AddExperience extends Component {
     to: "",
     current: false,
     description: "",
-    errors: {},
-    currentlyEmployed: ""
+    errors: {}
   };
 
   componentDidMount() {
@@ -53,17 +52,12 @@ class AddExperience extends Component {
   //submitting experience array form
 
   handleSubmitExp = e => {
-    //field 'to' will receive string if current:true
-    let currentlyWorking;
+    //field 'to' will receive string 'present' if current:true
     if (this.state.current === true) {
-      currentlyWorking = "to present";
-    } else {
-      currentlyWorking = "";
+      this.setState({
+        to: null
+      });
     }
-    this.setState({
-      currentlyEmployed: currentlyWorking
-    });
-
     e.preventDefault();
     const newExp = {
       title: this.state.title,
@@ -129,6 +123,7 @@ class AddExperience extends Component {
 
                       <TextInputForm
                         name="from"
+                        type="date"
                         value={this.state.from}
                         placeholder="From"
                         onChange={this.onChange}
@@ -151,6 +146,7 @@ class AddExperience extends Component {
                       {!this.state.current ? (
                         <TextInputForm
                           name="to"
+                          type="date"
                           value={this.state.to}
                           placeholder="to"
                           onChange={this.onChange}

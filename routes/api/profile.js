@@ -205,7 +205,7 @@ router.post(
   (req, res) => {
     const { isValid, errors } = validateExperienceInput(req.body);
     if (!isValid) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
 
     Profile.findOne({ user: req.user.id })
@@ -243,7 +243,7 @@ router.post(
   (req, res) => {
     const { isValid, errors } = validateEducationInput(req.body);
     if (!isValid) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
 
     Profile.findOne({ user: req.user.id })
@@ -272,7 +272,7 @@ router.post(
   }
 );
 
-// @ Route DELETE   api/profile/exp/:exp_id
+// @ Route DELETE   api/profile/exp/:exp
 // @ Desc deletes from profile experience
 // @ Access Private
 
@@ -280,14 +280,15 @@ router.delete(
   "/exp/:exp",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("deleting...");
+    console.log(req.params.exp);
 
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         //Get remove index
         const removeIndex = profile.experience
           .map(item => item.id)
-          .indexOf(req.params.exp_id);
+          .indexOf(req.params.exp);
+
         //Splice out item
 
         profile.experience.splice(removeIndex, 1);
@@ -296,12 +297,12 @@ router.delete(
       .catch(err => res.json(err));
   }
 );
-// @ Route DELETE   api/profile/edu/:exp_id
+// @ Route DELETE   api/profile/edu/:edu
 // @ Desc deletes from profile education
 // @ Access Private
 
 router.delete(
-  "/edu/:edu_id",
+  "/edu/:edu",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log("deleting...");
@@ -311,7 +312,8 @@ router.delete(
         //Get remove index
         const removeIndex = profile.education
           .map(item => item.id)
-          .indexOf(req.params.exp_id);
+          .indexOf(req.params.edu);
+
         //Splice out item
 
         profile.education.splice(removeIndex, 1);

@@ -4,3 +4,7 @@
 .main_height {
   height: 900px;
 }
+
+tr {
+  line-height: 1em;
+}

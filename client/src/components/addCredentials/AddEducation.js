@@ -16,8 +16,7 @@ class AddEducation extends Component {
     to: "",
     current: false,
     description: "",
-    errors: {},
-    currentlyEmployed: ""
+    errors: {}
   };
 
   componentDidMount() {
@@ -54,16 +53,12 @@ class AddEducation extends Component {
 
   handleSubmitExp = e => {
     //field 'to' will receive string if current:true
-    let currentlyWorking;
+    //field 'to' will receive string 'present' if current:true
     if (this.state.current === true) {
-      currentlyWorking = "to present";
-    } else {
-      currentlyWorking = "";
+      this.setState({
+        to: null
+      });
     }
-    this.setState({
-      currentlyEmployed: currentlyWorking
-    });
-
     e.preventDefault();
     const newEdu = {
       school: this.state.school,
@@ -126,13 +121,14 @@ class AddEducation extends Component {
                       <TextInputForm
                         name="fieldofstudy"
                         value={this.state.fieldofstudy}
-                        placeholder="fieldofstudy "
+                        placeholder="Field of study "
                         onChange={this.onChange}
                         error={this.state.errors.fieldofstudy}
                       />
 
                       <TextInputForm
                         name="from"
+                        type="date"
                         value={this.state.from}
                         placeholder="From"
                         onChange={this.onChange}
@@ -155,6 +151,7 @@ class AddEducation extends Component {
                       {!this.state.current ? (
                         <TextInputForm
                           name="to"
+                          type="date"
                           value={this.state.to}
                           placeholder="to"
                           onChange={this.onChange}

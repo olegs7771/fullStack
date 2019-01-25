@@ -1,40 +1,39 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Moment from "react-moment";
 
 class EducationProfile extends Component {
   render() {
     console.log(this.props);
     return (
       <div className="container my-3 ">
-        <div className="text-center lead text-muted mb-4">Education</div>
         <table className="table table-borderless">
+          <thead>
+            <tr>
+              <th className="text-muted">Title</th>
+              <th className="text-muted">Company</th>
+              <th className="text-muted">Years</th>
+              <th className="text-muted">Description</th>
+            </tr>
+          </thead>
+
           <tbody>
             <tr>
-              <td>School</td>
-              <td>{this.props.school}</td>
-            </tr>
-            <tr>
-              <td>Degree</td>
-              <td>{this.props.degree}</td>
-            </tr>
-            <tr>
-              <td>Field Of Study</td>
-              <td>{this.props.fieldofstudy}</td>
-            </tr>
-            <tr>
-              <td>from</td>
-              <td>{this.props.to}</td>
-            </tr>
-            <tr>
-              <td>to</td>
-              <td>{this.props.to}</td>
-            </tr>
-            <tr>
-              <td>description</td>
-              <td>{this.props.description}</td>
+              <td className="text-muted">{this.props.title}</td>
+              <td className="text-muted">{this.props.company}</td>
+              <td>
+                <Moment format="YYYY/MM/DD">{this.props.from}</Moment> -{" "}
+                {this.props.to === null ? (
+                  "present"
+                ) : (
+                  <Moment format="YYYY/MM/DD">{this.props.to}</Moment>
+                )}
+              </td>
+              <td className="text-muted">{this.props.descripton}</td>
             </tr>
           </tbody>
         </table>
+        <hr />
       </div>
     );
   }
