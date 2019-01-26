@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 class MainProfile extends Component {
+  state = {
+    showSocialLinks: false
+  };
+
   render() {
     const { user } = this.props.auth;
     console.log(user);
@@ -47,6 +51,86 @@ class MainProfile extends Component {
                 </tr>
               </tbody>
             </table>
+
+            {/* {Social Links Showen on click} */}
+            {this.state.showSocialLinks ? (
+              <div>
+                <button
+                  className="btn btn-sm btn-light "
+                  onClick={() => {
+                    this.setState({
+                      showSocialLinks: !this.state.showSocialLinks //show Social Links on click
+                    });
+                  }}
+                >
+                  {" "}
+                  <span>
+                    <i className="fas fa-arrow-up mr-2" />
+                    Social Links
+                  </span>{" "}
+                </button>
+                <div className="container mt-4">
+                  <div className="container my-3 ">
+                    {this.props.youtube ? (
+                      <div className="d-inline p-2  mr-2">
+                        <a href={this.props.youtube}>
+                          <span className="text-white bg-danger p-2 rounded">
+                            <i className="fab fa-youtube-square mr-1 " />{" "}
+                            Youtube
+                          </span>
+                        </a>
+                      </div>
+                    ) : null}
+                    {this.props.twitter ? (
+                      <div className="d-inline p-2  mr-2 ">
+                        <a href={this.props.twitter}>
+                          <span className="text-white bg-info  p-2 rounded">
+                            <i className="fab fa-twitter-square mr-1 " />
+                            Twitter
+                          </span>
+                        </a>
+                      </div>
+                    ) : null}
+                    {this.props.instagram ? (
+                      <div className="d-inline p-2  mr-2">
+                        <a href={this.props.instagram}>
+                          <span className="text-white bg-danger p-2 rounded">
+                            <i className="fab fa-instagram mr-1 " /> Instagram
+                          </span>
+                        </a>
+                      </div>
+                    ) : null}
+                    {this.props.facebook ? (
+                      <div className="d-inline p-2  mr-2">
+                        <a href={this.props.facebook}>
+                          <span className="text-white bg-primary p-2 rounded">
+                            <i className="fab fa-facebook-square mr-1 " />{" "}
+                            Facebook
+                          </span>
+                        </a>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <button
+                className="btn btn-sm btn-light "
+                onClick={() => {
+                  this.setState({
+                    showSocialLinks: !this.state.showSocialLinks //show Social Links on click
+                  });
+                }}
+              >
+                {" "}
+                <span>
+                  <i className="fas fa-arrow-down mr-2" />
+                  Social Links
+                </span>{" "}
+              </button>
+            )}
+
+            {/* {End Social } */}
           </div>
         </div>
       </div>

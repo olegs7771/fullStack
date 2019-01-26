@@ -11,7 +11,8 @@ import {
   SET_CURRENT_USER,
   EDIT_EXPERIENCE,
   EDIT_EDUCATION,
-  DELETE_EXPERIENCE
+  DELETE_EXPERIENCE,
+  DELETE_EDUCATION
 } from "./types";
 
 //get current profile
@@ -140,16 +141,34 @@ export const deleteProfile = (_id, history) => dispatch => {
 };
 
 //delete experience from profile by id
-export const deleteExp = (_id, history) => dispatch => {
+export const deleteExp = _id => dispatch => {
   axios
     .delete(`/api/profile/exp/${_id}`)
     .then(res => {
       dispatch({
-        type: DELETE_EXPERIENCE,
+        type: GET_PROFILE,
         payload: res.data
       });
     })
-    .then(() => history.push("/dashboard"))
+
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+//delete education from profile by id
+export const deleteEdu = _id => dispatch => {
+  axios
+    .delete(`/api/profile/edu/${_id}`)
+    .then(res => {
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      });
+    })
+
     .catch(err => {
       dispatch({
         type: GET_ERRORS,

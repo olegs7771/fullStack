@@ -117,23 +117,29 @@ router.post(
     if (req.body.handle) profileFields.handle = req.body.handle;
 
     ///company
-    if (req.body.company.length == 0) {
-      profileFields.company = "";
-    } else {
-      profileFields.company = req.body.company;
+    if (req.body.company) {
+      if (req.body.company.length == 0) {
+        profileFields.company = "";
+      } else {
+        profileFields.company = req.body.company;
+      }
     }
     //website
-    if (req.body.website.length == 0) {
-      profileFields.website = "";
-    } else {
-      profileFields.website = req.body.website;
+    if (req.body.website) {
+      if (req.body.website.length == 0) {
+        profileFields.website = "";
+      } else {
+        profileFields.website = req.body.website;
+      }
     }
 
     ///location
-    if (req.body.location.length == 0) {
-      profileFields.location = "";
-    } else {
-      profileFields.location = req.body.location;
+    if (req.body.location) {
+      if (req.body.location.length == 0) {
+        profileFields.location = "";
+      } else {
+        profileFields.location = req.body.location;
+      }
     }
 
     if (req.body.status) profileFields.status = req.body.status;
@@ -143,16 +149,20 @@ router.post(
     }
 
     ///bio
-    if (req.body.bio.length == 0) {
-      profileFields.bio = "";
-    } else {
-      profileFields.bio = req.body.bio;
+    if (req.body.bio) {
+      if (req.body.bio.length == 0) {
+        profileFields.bio = "";
+      } else {
+        profileFields.bio = req.body.bio;
+      }
     }
     ///GitHub username
-    if (req.body.githubusername.length == 0) {
-      profileFields.githubusername = "";
-    } else {
-      profileFields.githubusername = req.body.githubusername;
+    if (req.body.githubusername) {
+      if (req.body.githubusername.length == 0) {
+        profileFields.githubusername = "";
+      } else {
+        profileFields.githubusername = req.body.githubusername;
+      }
     }
 
     //Social has its own object
@@ -162,7 +172,7 @@ router.post(
     if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
     if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
     if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.body.instagram) profileFields.instagram = req.body.instagram;
+    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
     // //For Update Profile We must check first if profile must be
     // //updated or create new one
     Profile.findOne({ user: req.user.id }).then(profile => {
@@ -170,9 +180,10 @@ router.post(
         //Update
         Profile.findOneAndUpdate(
           {
-            user: req.user.id //find to what user make updates
+            user: req.user.id //find to what user make updates (condition)!
           },
           { $set: profileFields },
+
           {
             new: true //true to return modified document
           }
@@ -280,8 +291,6 @@ router.delete(
   "/exp/:exp",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.params.exp);
-
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         //Get remove index

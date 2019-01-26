@@ -52,7 +52,7 @@ class EditProfile extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate");
+    console.log(prevProps.profile.social);
 
     if (this.props.profile.profile !== prevProps.profile.profile) {
       let skillsCSV = this.props.profile.profile.skills.join(",");
@@ -66,7 +66,12 @@ class EditProfile extends Component {
         website: profile.website,
         location: profile.location,
         githubusername: profile.githubusername,
-        bio: profile.bio
+        bio: profile.bio,
+        //social
+        twitter: profile.social.twitter,
+        facebook: profile.social.facebook,
+        youtube: profile.social.youtube,
+        linkedin: profile.social.linkedin
       });
     }
   }

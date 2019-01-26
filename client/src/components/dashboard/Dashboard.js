@@ -37,15 +37,18 @@ class Dashboard extends Component {
       //check for profile
       if (Object.keys(profile).length > 0) {
         //user has profile
-        console.log(profile);
+
         dashboardContent = (
           <div className="mt-3">
-            <h3>
+            <h4 className="text-muted">
               Welcome{" "}
-              <small className="muted">
-                <Link to="/profile"> {user.name} </Link>
+              <small>
+                <Link to="/profile" className="text-dark">
+                  {" "}
+                  {user.name}{" "}
+                </Link>
               </small>
-            </h3>
+            </h4>
             <hr />
             <MainProfile
               handle={profile.handle}
@@ -55,8 +58,16 @@ class Dashboard extends Component {
               website={profile.website}
               location={profile.location}
               githubusername={profile.githubusername}
+              _id={profile._id}
+              facebook={profile.social.facebook}
+              twitter={profile.social.twitter}
+              youtube={profile.social.youtube}
+              linkedin={profile.social.linkedin}
+              instagram={profile.social.instagram}
             />
             <hr />
+            <br />
+            <br />
             {/* {Experience & Educacation } */}
 
             <h5 className="text-center text-muted">Experience</h5>
