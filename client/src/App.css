@@ -8,3 +8,14 @@
 tr {
   line-height: 1em;
 }
+
+.col {
+  border: 1px solid black;
+}
+.row {
+  padding-bottom: 3px;
+}
+li.borderless,
+ul.borderless {
+  border-top: 0 none;
+}

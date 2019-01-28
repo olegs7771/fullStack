@@ -13,43 +13,43 @@ class ExperienceProfile extends Component {
   };
 
   render() {
+    const { title, company, from, to, desc, _id } = this.props;
     return (
       <div className="container my-4 ">
-        <table className="table table-borderless">
-          <thead>
-            <tr>
-              <th className="text-muted">Title</th>
-              <th className="text-muted">Company</th>
-              <th className="text-muted">Years</th>
-              <th className="text-muted">Description</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr>
-              <td className="text-muted">{this.props.title}</td>
-              <td className="text-muted">{this.props.company}</td>
-              <td>
-                <Moment format="YYYY/MM/DD">{this.props.from}</Moment> -{" "}
-                {this.props.to === null ? (
-                  "present"
-                ) : (
-                  <Moment format="YYYY/MM/DD">{this.props.to}</Moment>
-                )}
-              </td>
-              <td className="text-muted">{this.props.descripton}</td>
-              <td>
-                <button
-                  className="btn btn-danger btn-small"
-                  onClick={this.handleDeleteExp.bind(this, this.props._id)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <hr />
+        {/* { Dashboard Experience Profile } */}
+        <ul className="list-group list-group-flush">
+          <li className="list-group-item borderless">
+            <span className="text-muted h6">Title :</span> <span>{title}</span>
+          </li>
+          <li className="list-group-item borderless">
+            <span className="text-muted h6">Company :</span>{" "}
+            <span>{company}</span>
+          </li>
+          <li className="list-group-item borderless">
+            <span className="text-muted h6">Years :</span>{" "}
+            <span>
+              {" "}
+              <Moment format="YYYY/MM/DD">{this.props.from}</Moment> -{" "}
+              {this.props.to === null ? (
+                "present"
+              ) : (
+                <Moment format="YYYY/MM/DD">{this.props.to}</Moment>
+              )}
+            </span>
+          </li>
+          <li className="list-group-item borderless">
+            <span className="text-muted h6">Description :</span>{" "}
+            <span>{desc}</span>
+          </li>
+          <li className="list-group-item borderless">
+            <button
+              className="btn btn-danger btn-small"
+              onClick={this.handleDeleteExp.bind(this, this.props._id)}
+            >
+              Delete
+            </button>
+          </li>
+        </ul>
       </div>
     );
   }

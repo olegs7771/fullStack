@@ -9,8 +9,7 @@ import {
 const initialState = {
   profile: null,
   profiles: null,
-  loading: false,
-  message: {}
+  loading: false
 };
 
 export default function(state = initialState, action) {
@@ -42,7 +41,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         profiles: action.payload,
-        loading: true
+        loading: false
       };
 
     default:

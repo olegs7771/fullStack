@@ -31,7 +31,7 @@ router.get("/all", (req, res) => {
         res.json({ msg: "No profile" });
       }
     })
-    .catch(err => res.json(err));
+    .catch(err => res.status(400).json(err));
 });
 
 // @route GET api/profile/handle/:handle

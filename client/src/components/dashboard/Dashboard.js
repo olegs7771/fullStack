@@ -28,6 +28,7 @@ class Dashboard extends Component {
   render() {
     const { user } = this.props.auth;
     const { profile, loading } = this.props.profile;
+    console.log(profile);
 
     let dashboardContent;
 
@@ -50,10 +51,13 @@ class Dashboard extends Component {
               </small>
             </h4>
             <hr />
+            <div className="text-center h4 text-muted my-3">Basic Info</div>
             <MainProfile
+              avatar={profile.user.avatar}
+              user={profile.user.name}
               handle={profile.handle}
               profStatus={profile.status}
-              skills={profile.skills.join(",")}
+              skills={profile.skills}
               company={profile.company}
               website={profile.website}
               location={profile.location}
@@ -78,7 +82,7 @@ class Dashboard extends Component {
                 company={item.company}
                 from={item.from}
                 to={item.to}
-                description={item.description}
+                desc={item.description}
                 _id={item._id}
               />
             ))}

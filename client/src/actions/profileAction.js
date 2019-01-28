@@ -10,9 +10,7 @@ import {
   GET_PROFILES,
   SET_CURRENT_USER,
   EDIT_EXPERIENCE,
-  EDIT_EDUCATION,
-  DELETE_EXPERIENCE,
-  DELETE_EDUCATION
+  EDIT_EDUCATION
 } from "./types";
 
 //get current profile
@@ -103,18 +101,19 @@ export const editEducation = (newEdu, history) => dispatch => {
 
 //get all profiles
 export const getAllProfiles = () => dispatch => {
+  dispatch(setProfileLoading()); //makes loading state true
   axios
     .get("/api/profile/all")
     .then(res => {
       dispatch({
-        type: GET_PROFILES,
+        type: GET_PROFILES, //make loading state false and loads profiles
         payload: res.data
       });
     })
     .catch(err => {
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: GET_PROFILES,
+        payload: null
       });
     });
 };

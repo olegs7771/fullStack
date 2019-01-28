@@ -7,50 +7,72 @@ class MainProfile extends Component {
   };
 
   render() {
-    const { user } = this.props.auth;
-    console.log(user);
+    const {
+      avatar,
+      user,
+      handle,
+      profStatus,
+      skills,
+      company,
+      website,
+      location,
+      githubusername,
+      facebook,
+      twitter,
+      youtube,
+      linkedin,
+      instagram
+    } = this.props;
 
-    console.log(this.props);
     return (
       <div className="container my-3 ">
         <div className="row justify-content-md-center">
           {/* {main profile picture from avatar} */}
-          <div className="col-md-2">
+          <div className=" col col-md-2 d-none d-md-block">
             <img
-              src={user.avatar}
-              alt={user.name}
+              src={avatar}
+              alt={user}
               className="rounded-circle border my-4 "
-              style={{ width: "150px", marginLeft: "5px" }}
+              style={{ width: "100px" }}
             />{" "}
           </div>
           {/* {main profile credentials} */}
-          <div className=" col-md-10">
-            <div className="text-center h4 text-muted my-3">Basic Info</div>
-            <table className="table ">
-              <thead>
-                <tr>
-                  <th scope="col">Handle</th>
-                  <th scope="col">Prof Status</th>
-                  <th scope="col">Skills</th>
-                  <th scope="col">Company</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">GitHub User</th>
-                  <th scope="col">Web site</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <td className="text-muted">{this.props.handle}</td>
-                  <td className="text-muted">{this.props.profStatus}</td>
-                  <td className="text-muted">{this.props.skills}</td>
-                  <td className="text-muted">{this.props.company}</td>
-                  <td className="text-muted">{this.props.location}</td>
-                  <td className="text-muted">{this.props.githubusername}</td>
-                  <td className="text-muted">{this.props.website}</td>
-                </tr>
-              </tbody>
-            </table>
+          <div className=" col col-md-6 col-sm-8">
+            {/* { Main Profile Credentials} */}
+            <ul className="list-group list-group-flush py-4">
+              <li className="list-group-item borderless">
+                <span className="text-muted ">Name :</span>{" "}
+                <span className="text-italic">{user} </span>
+              </li>
+              <li className="list-group-item borderless">
+                <span className="text-muted ">Status :</span>{" "}
+                <span className="text-italic">{profStatus} </span>
+              </li>
+              <li className="list-group-item borderless">
+                <span className="text-muted ">Skills :</span>{" "}
+                <span className="text-italic">
+                  {skills.slice(0, 3).map((skill, index) => (
+                    <span key={index}>{skill}, </span>
+                  ))}
+                </span>
+              </li>
+              <li className="list-group-item borderless">
+                <span className="text-muted ">Company:</span>{" "}
+                <span className="text-italic">{company} </span>
+              </li>
+              <li className="list-group-item borderless">
+                <span className="text-muted ">Location:</span>{" "}
+                <span className="text-italic">{location} </span>
+              </li>
+              <li className="list-group-item borderless">
+                <span className="text-muted ">WebSite:</span>{" "}
+                <span className="text-italic">{website} </span>
+              </li>
+              <li className="list-group-item borderless">
+                <span className="text-muted ">GitHub:</span>{" "}
+                <span className="text-italic">{githubusername} </span>
+              </li>
+            </ul>
 
             {/* {Social Links Showen on click} */}
             {this.state.showSocialLinks ? (
@@ -69,48 +91,50 @@ class MainProfile extends Component {
                     Social Links
                   </span>{" "}
                 </button>
-                <div className="container mt-4">
-                  <div className="container my-3 ">
-                    {this.props.youtube ? (
-                      <div className="d-inline p-2  mr-2">
-                        <a href={this.props.youtube}>
+
+                {/* {Socila Links} */}
+                <div className="my-4 ">
+                  <ul className="list-group list-group-flush">
+                    {youtube ? (
+                      <li className="list-group-item borderless">
+                        <a href={youtube}>
                           <span className="text-white bg-danger p-2 rounded">
                             <i className="fab fa-youtube-square mr-1 " />{" "}
                             Youtube
                           </span>
                         </a>
-                      </div>
+                      </li>
                     ) : null}
-                    {this.props.twitter ? (
-                      <div className="d-inline p-2  mr-2 ">
-                        <a href={this.props.twitter}>
+                    {twitter ? (
+                      <li className="list-group-item borderless">
+                        <a href={twitter}>
                           <span className="text-white bg-info  p-2 rounded">
                             <i className="fab fa-twitter-square mr-1 " />
                             Twitter
                           </span>
                         </a>
-                      </div>
+                      </li>
                     ) : null}
-                    {this.props.instagram ? (
-                      <div className="d-inline p-2  mr-2">
-                        <a href={this.props.instagram}>
+                    {instagram ? (
+                      <li className="list-group-item borderless">
+                        <a href={instagram}>
                           <span className="text-white bg-danger p-2 rounded">
                             <i className="fab fa-instagram mr-1 " /> Instagram
                           </span>
                         </a>
-                      </div>
+                      </li>
                     ) : null}
-                    {this.props.facebook ? (
-                      <div className="d-inline p-2  mr-2">
-                        <a href={this.props.facebook}>
+                    {facebook ? (
+                      <li className="list-group-item borderless">
+                        <a href={facebook}>
                           <span className="text-white bg-primary p-2 rounded">
-                            <i className="fab fa-facebook-square mr-1 " />{" "}
+                            <i className="fab fa-facebook-square mr-1  " />{" "}
                             Facebook
                           </span>
                         </a>
-                      </div>
+                      </li>
                     ) : null}
-                  </div>
+                  </ul>
                 </div>
               </div>
             ) : (
@@ -138,8 +162,4 @@ class MainProfile extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(mapStateToProps)(MainProfile);
+export default connect(null)(MainProfile);

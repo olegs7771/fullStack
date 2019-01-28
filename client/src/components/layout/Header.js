@@ -57,7 +57,7 @@ class Header extends Component {
     );
 
     return (
-      <div className="pos-f-t">
+      <div className="pos-f-t mb-3">
         <nav className="navbar  navbar-dark bg-dark py-0">
           <Link to="/">
             <span className="navbar-brand">DevConnector</span>
@@ -73,6 +73,11 @@ class Header extends Component {
               <li className="nav-item">
                 <Link to="/dashboard" className="nav-link">
                   Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/grid" className="nav-link">
+                  Grid
                 </Link>
               </li>
             </ul>
