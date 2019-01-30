@@ -9,25 +9,27 @@ class EducationProfile extends Component {
   };
 
   render() {
+    const { school, degree, study, from, to, desc } = this.props;
     return (
-      <div className="container my-3 ">
-        <table className="table table-borderless">
+      <div className=" my-4 ">
+        {/* { Dashboard Experience Profile } */}
+        <table className="table ">
           <thead>
             <tr>
-              <th className="text-muted">School</th>
-              <th className="text-muted">Degree</th>
-              <th className="text-muted">Study</th>
-              <th className="text-muted">Years</th>
-              <th className="text-muted">Description</th>
+              <th>School</th>
+              <th>Degree</th>
+              <th>Study</th>
+              <th>Years</th>
+              <th>Description</th>
             </tr>
           </thead>
-
           <tbody>
             <tr>
-              <td className="text-muted">{this.props.school}</td>
-              <td className="text-muted">{this.props.degree}</td>
-              <td className="text-muted">{this.props.study}</td>
+              <td>{school}</td>
+              <td>{degree}</td>
+              <td>{study}</td>
               <td>
+                {" "}
                 <Moment format="YYYY/MM/DD">{this.props.from}</Moment> -{" "}
                 {this.props.to === null ? (
                   "present"
@@ -35,8 +37,9 @@ class EducationProfile extends Component {
                   <Moment format="YYYY/MM/DD">{this.props.to}</Moment>
                 )}
               </td>
-              <td className="text-muted">{this.props.descripton}</td>
+              <td>{desc}</td>
               <td>
+                {" "}
                 <button
                   className="btn btn-danger btn-small"
                   onClick={this.handleDeleteEdu.bind(this, this.props._id)}
@@ -47,7 +50,6 @@ class EducationProfile extends Component {
             </tr>
           </tbody>
         </table>
-        <hr />
       </div>
     );
   }

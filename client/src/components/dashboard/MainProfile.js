@@ -28,7 +28,7 @@ class MainProfile extends Component {
       <div className="container my-3 ">
         <div className="row justify-content-md-center">
           {/* {main profile picture from avatar} */}
-          <div className=" col col-md-2 d-none d-md-block">
+          <div className=" col col-md-4 d-none d-md-block">
             <img
               src={avatar}
               alt={user}
@@ -37,18 +37,18 @@ class MainProfile extends Component {
             />{" "}
           </div>
           {/* {main profile credentials} */}
-          <div className=" col col-md-6 col-sm-8">
+          <div className=" col col-md-8 col-sm-8">
             {/* { Main Profile Credentials} */}
             <ul className="list-group list-group-flush py-4">
-              <li className="list-group-item borderless">
+              <li className="list-group-item borderless line_height">
                 <span className="text-muted ">Name :</span>{" "}
                 <span className="text-italic">{user} </span>
               </li>
-              <li className="list-group-item borderless">
+              <li className="list-group-item borderless line_height">
                 <span className="text-muted ">Status :</span>{" "}
                 <span className="text-italic">{profStatus} </span>
               </li>
-              <li className="list-group-item borderless">
+              <li className="list-group-item borderless line_height">
                 <span className="text-muted ">Skills :</span>{" "}
                 <span className="text-italic">
                   {skills.slice(0, 3).map((skill, index) => (
@@ -56,19 +56,19 @@ class MainProfile extends Component {
                   ))}
                 </span>
               </li>
-              <li className="list-group-item borderless">
+              <li className="list-group-item borderless line_height">
                 <span className="text-muted ">Company:</span>{" "}
                 <span className="text-italic">{company} </span>
               </li>
-              <li className="list-group-item borderless">
+              <li className="list-group-item borderless line_height">
                 <span className="text-muted ">Location:</span>{" "}
                 <span className="text-italic">{location} </span>
               </li>
-              <li className="list-group-item borderless">
+              <li className="list-group-item borderless line_height">
                 <span className="text-muted ">WebSite:</span>{" "}
                 <span className="text-italic">{website} </span>
               </li>
-              <li className="list-group-item borderless">
+              <li className="list-group-item borderless line_height">
                 <span className="text-muted ">GitHub:</span>{" "}
                 <span className="text-italic">{githubusername} </span>
               </li>

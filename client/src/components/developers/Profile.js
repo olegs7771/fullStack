@@ -21,7 +21,7 @@ class Profile extends Component {
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">
-          <div className=" col  col-3 py-4">
+          <div className=" col col-md-3 col-5 py-4">
             <img
               src={avatar}
               alt=""
@@ -29,7 +29,7 @@ class Profile extends Component {
               style={{ width: "100px" }}
             />
           </div>
-          <div className=" col col-md-4 col-sm-6 py-4">
+          <div className=" col col-md-4 col-sm-4 py-4">
             <h4>{userName}</h4>
             <p>
               {status} {isEmpty(company) ? null : <span>at {company}</span>}

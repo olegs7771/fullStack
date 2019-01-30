@@ -51,57 +51,61 @@ class Dashboard extends Component {
               </small>
             </h4>
             <hr />
-            <div className="text-center h4 text-muted my-3">Basic Info</div>
-            <MainProfile
-              avatar={profile.user.avatar}
-              user={profile.user.name}
-              handle={profile.handle}
-              profStatus={profile.status}
-              skills={profile.skills}
-              company={profile.company}
-              website={profile.website}
-              location={profile.location}
-              githubusername={profile.githubusername}
-              _id={profile._id}
-              facebook={profile.social.facebook}
-              twitter={profile.social.twitter}
-              youtube={profile.social.youtube}
-              linkedin={profile.social.linkedin}
-              instagram={profile.social.instagram}
-            />
-            <hr />
-            <br />
-            <br />
-            {/* {Experience & Educacation } */}
+            <div className="row">
+              <div className="col-md-6">
+                <div className="text-center h5 text-muted ">Basic Info</div>
+                <MainProfile
+                  avatar={profile.user.avatar}
+                  user={profile.user.name}
+                  handle={profile.handle}
+                  profStatus={profile.status}
+                  skills={profile.skills}
+                  company={profile.company}
+                  website={profile.website}
+                  location={profile.location}
+                  githubusername={profile.githubusername}
+                  _id={profile._id}
+                  facebook={profile.social.facebook}
+                  twitter={profile.social.twitter}
+                  youtube={profile.social.youtube}
+                  linkedin={profile.social.linkedin}
+                  instagram={profile.social.instagram}
+                />
+              </div>
+              <hr />
+              <br />
+              <br />
+              {/* {Experience & Educacation } */}
+              <div className="col-md-6 col-sm-4">
+                <h5 className="text-center text-muted">Experience</h5>
+                {profile.experience.map((item, i) => (
+                  <ExperienceProfile
+                    key={i}
+                    title={item.title}
+                    company={item.company}
+                    from={item.from}
+                    to={item.to}
+                    desc={item.description}
+                    _id={item._id}
+                  />
+                ))}
 
-            <h5 className="text-center text-muted">Experience</h5>
-            {profile.experience.map((item, i) => (
-              <ExperienceProfile
-                key={i}
-                title={item.title}
-                company={item.company}
-                from={item.from}
-                to={item.to}
-                desc={item.description}
-                _id={item._id}
-              />
-            ))}
-
-            <h5 className="text-center text-muted">Education</h5>
-            {profile.education.map((item, id) => (
-              <EducationProfile
-                key={id}
-                school={item.school}
-                degree={item.degree}
-                fieldofstudy={item.fieldofstudy}
-                from={item.from}
-                to={item.to}
-                description={item.description}
-              />
-            ))}
-
-            <ProfileActions name={user.name} />
-            {/* TODO:exp and edu */}
+                <h5 className="text-center text-muted">Education</h5>
+                {profile.education.map((item, id) => (
+                  <EducationProfile
+                    key={id}
+                    school={item.school}
+                    degree={item.degree}
+                    study={item.fieldofstudy}
+                    from={item.from}
+                    to={item.to}
+                    desc={item.description}
+                  />
+                ))}
+              </div>
+              <ProfileActions name={user.name} />
+              {/* TODO:exp and edu */}
+            </div>
             <div style={{ marginBottom: "60px" }}>
               <button
                 className="btn btn-danger"
@@ -128,16 +132,10 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="">
-        <div className="container mt-4">
-          <div className="row">
-            <div className="col-md-12 mx-auto">
-              <div className="display-4 text-center">Dashboard</div>
+      <div className=" ">
+        <div className="display-4 text-center">Dashboard</div>
 
-              {dashboardContent}
-            </div>
-          </div>
-        </div>
+        {dashboardContent}
       </div>
     );
   }
