@@ -26,17 +26,14 @@ class Developers extends Component {
   }
 
   render() {
-    console.log(this.props);
     const { profiles, loading } = this.props.profile;
 
     let profileItem;
 
     if (profiles === null || loading) {
       profileItem = <Spinner />; //no profiles only loading is true
-      console.log(profiles);
     } else {
       if (profiles.length > 0) {
-        console.log(profiles.length);
         //profiles is array so we check with length
         return profiles.map((profile, id) => (
           <Profile

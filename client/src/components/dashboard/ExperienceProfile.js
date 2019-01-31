@@ -13,7 +13,7 @@ class ExperienceProfile extends Component {
   };
 
   render() {
-    const { title, company, from, to, desc, _id } = this.props;
+    const { title, company, desc } = this.props;
     return (
       <div className=" my-4 ">
         {/* { Dashboard Experience Profile } */}

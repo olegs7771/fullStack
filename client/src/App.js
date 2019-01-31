@@ -21,6 +21,7 @@ import EditProfile from "./components/editProfile/EditProfile";
 import AddExperience from "./components/addCredentials/AddExperience";
 import AddEducation from "./components/addCredentials/AddEducation";
 import Developers from "./components/developers/Developers";
+import Profile from "./components/profile/Profile";
 import Grid from "./components/Grid";
 
 import "./App.css";
@@ -86,6 +87,7 @@ class App extends Component {
                 />
                 <Route exact path="/developers" component={Developers} />
                 <Route exact path="/grid" component={Grid} />
+                <Route exact path="/profile/:handle" component={Profile} />
               </Switch>
             </div>
             <Footer />

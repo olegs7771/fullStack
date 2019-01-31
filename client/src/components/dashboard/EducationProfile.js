@@ -9,7 +9,7 @@ class EducationProfile extends Component {
   };
 
   render() {
-    const { school, degree, study, from, to, desc } = this.props;
+    const { school, degree, study, desc } = this.props;
     return (
       <div className=" my-4 ">
         {/* { Dashboard Experience Profile } */}

@@ -10,7 +10,7 @@ class MainProfile extends Component {
     const {
       avatar,
       user,
-      handle,
+
       profStatus,
       skills,
       company,
@@ -130,6 +130,16 @@ class MainProfile extends Component {
                           <span className="text-white bg-primary p-2 rounded">
                             <i className="fab fa-facebook-square mr-1  " />{" "}
                             Facebook
+                          </span>
+                        </a>
+                      </li>
+                    ) : null}
+                    {linkedin ? (
+                      <li className="list-group-item borderless">
+                        <a href={linkedin}>
+                          <span className="text-white bg-primary p-2 rounded">
+                            <i className="fab fa-linkedin-square mr-1  " />{" "}
+                            LinkedIn
                           </span>
                         </a>
                       </li>

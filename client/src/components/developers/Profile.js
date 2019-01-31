@@ -5,18 +5,15 @@ import { Link } from "react-router-dom";
 class Profile extends Component {
   render() {
     const {
-      userAvatar,
       handle,
       status,
       skills,
       company,
       location,
-      website,
-      githubuser,
+
       avatar,
       userName
     } = this.props;
-    console.log(skills);
 
     return (
       <div className="card card-body bg-light mb-3">
