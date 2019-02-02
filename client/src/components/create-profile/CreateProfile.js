@@ -50,6 +50,7 @@ class CreateProfile extends Component {
   // Submit form
 
   registerFormSubmit = e => {
+    e.preventDefault();
     const {
       handle,
       company,
@@ -65,8 +66,7 @@ class CreateProfile extends Component {
       youtube,
       instagram
     } = this.state;
-    e.preventDefault();
-    console.log("submitted");
+
     const newProfile = {
       handle,
       company,
@@ -105,11 +105,10 @@ class CreateProfile extends Component {
       errors,
       user
     } = this.state;
-    console.log(errors);
 
     //Select options for status
     const options = [
-      { label: "* Select Professional status", value: 0 },
+      { label: "* Select Professional status", value: null },
       { label: " Developer", value: "Developer" },
       { label: " Junior Developer", value: "Junior Developer" },
       { label: " Senior Developer", value: "Senior Developer" },
