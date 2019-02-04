@@ -2,18 +2,24 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const TextInputForm = ({
+const InputSocilaForm = ({
   name,
-  lable,
+
   type,
   value,
   placeholder,
   onChange,
-  info,
-  error
+
+  error,
+  icon
 }) => {
   return (
-    <div className="group-control mt-3 ">
+    <div className="input-group mb-3">
+      <div className="input-group-prepend">
+        <span className="input-group-text">
+          <i className={icon} />
+        </span>
+      </div>
       <input
         type={type}
         className={classnames("form-control form-control-lg", {
@@ -24,23 +30,24 @@ const TextInputForm = ({
         placeholder={placeholder}
         onChange={onChange}
       />
-      <small className="form-text text-muted">{info}</small>
+
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
 };
 
-TextInputForm.defaultProps = {
+InputSocilaForm.defaultProps = {
   type: "text"
 };
-TextInputForm.propTypes = {
+
+InputSocilaForm.propTypes = {
   name: PropTypes.string.isRequired,
   lable: PropTypes.string,
   type: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
-  info: PropTypes.string,
+  // icon: PropTypes.string.Required,
   error: PropTypes.string,
   disabled: PropTypes.string
 };
 
-export default TextInputForm;
+export default InputSocilaForm;

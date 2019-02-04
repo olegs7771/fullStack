@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
+
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authAction";
 import TextInputForm from "../common/TextInputForm";
@@ -34,19 +34,16 @@ class Register extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
-    console.log(props);
     if (props.errors) {
       return { errors: props.errors };
     }
   }
 
   render() {
-    console.log(this.props.errors);
-
     const { name, email, password1, password2, errors } = this.state;
 
     return (
-      <div className="register">
+      <div className="main_height">
         <div className="row">
           <div className="col-md-6 mx-auto">
             <h2 className="text-center">Sign Up</h2>

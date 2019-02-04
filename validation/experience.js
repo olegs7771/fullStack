@@ -28,5 +28,10 @@ module.exports = function validateExperienceInput(data) {
     }
   }
 
+  //Valid Format Validator
+
+  if (Validator.isDataURI(data.from)) {
+    errors.from = "Please use valid format e.g. (6.30.2010)";
+  }
   return { errors, isValid: isEmpty(errors) };
 };

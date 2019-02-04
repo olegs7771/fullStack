@@ -4,6 +4,7 @@ const passport = require("passport");
 const Profile = require("../../models/Profile");
 const Users = require("../../models/User");
 //Load Validation
+const isEmpty = require("../../validation/is_empty");
 
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
@@ -31,7 +32,7 @@ router.get("/all", (req, res) => {
         res.json({ msg: "No profile" });
       }
     })
-    .catch(err => res.json(err));
+    .catch(err => res.status(400).json(err));
 });
 
 // @route GET api/profile/handle/:handle
@@ -44,15 +45,13 @@ router.get("/handle/:handle", (req, res) => {
     //req.params.handle and try to find it in db
     .populate("user", ["name", "avatar"])
     .then(profile => {
-      if (!profile) {
-        errors.noprofile = "No profile for this user";
-        res.status(404).json(errors);
+      if (profile) {
+        res.status(200).json(profile);
+      } else {
+        res.status(404).json({ error: "No profile for this handle" });
       }
-
-      console.log("profile");
-      res.json(profile);
     })
-    .catch(err => res.json(err));
+    .catch(err => res.status(400).json(err));
 });
 // @route GET api/profile/user/:user_id
 // @desc  get profile by ID
@@ -112,40 +111,97 @@ router.post(
 
       return res.status(400).json(errors);
     }
-    // // Get fields
+
+    // Get fields (required fields)!!!
     const profileFields = {};
     profileFields.user = req.user.id; //<---logged in user
     if (req.body.handle) profileFields.handle = req.body.handle; //checking if req.body.handle came from form
-    if (req.body.handle) profileFields.handle = req.body.handle;
-    if (req.body.company) profileFields.company = req.body.company;
-    if (req.body.website) profileFields.website = req.body.website;
-    if (req.body.location) profileFields.location = req.body.location;
+
     if (req.body.status) profileFields.status = req.body.status;
+
     //Skills we split into array(cause it came as comma separated value)
     if (typeof req.body.skills !== "undefined") {
       profileFields.skills = req.body.skills.split(",");
     }
-    if (req.body.bio) profileFields.bio = req.body.bio;
-    if (req.body.githubusername)
+
+    // not required fields!!!
+
+    ///company
+    if (isEmpty(req.body.company)) {
+      profileFields.company = "";
+    } else {
+      profileFields.company = req.body.company;
+    }
+    ///website
+    if (isEmpty(req.body.website)) {
+      profileFields.website = "";
+    } else {
+      profileFields.website = req.body.website;
+    }
+    ///location
+    if (isEmpty(req.body.location)) {
+      profileFields.location = "";
+    } else {
+      profileFields.location = req.body.location;
+    }
+    ///bio
+    if (isEmpty(req.body.bio)) {
+      profileFields.bio = "";
+    } else {
+      profileFields.bio = req.body.bio;
+    }
+    ///GitHub username
+    if (isEmpty(req.body.githubusername)) {
+      profileFields.githubusername = "";
+    } else {
       profileFields.githubusername = req.body.githubusername;
+    }
+
     //Social has its own object
     profileFields.social = {};
-    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-    if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.body.instagram) profileFields.instagram = req.body.instagram;
-    // //For Update Profile We must check first if profile must be
-    // //updated or create new one
+    if (req.body.youtube) {
+      profileFields.social.youtube = req.body.youtube;
+    } else {
+      profileFields.social.youtube = "";
+    }
+    if (req.body.twitter) {
+      profileFields.social.twitter = req.body.twitter;
+    } else {
+      profileFields.social.twitter = "";
+    }
+    if (req.body.linkedin) {
+      profileFields.social.linkedin = req.body.linkedin;
+    } else {
+      profileFields.social.linkedin = "";
+    }
+    if (req.body.facebook) {
+      profileFields.social.facebook = req.body.facebook;
+    } else {
+      profileFields.social.facebook = "";
+    }
+    if (req.body.youtube) {
+      profileFields.social.youtube = req.body.youtube;
+    } else {
+      profileFields.social.youtube = "";
+    }
+    if (req.body.instagram) {
+      profileFields.social.instagram = req.body.instagram;
+    } else {
+      profileFields.social.instagram = "";
+    }
+
+    //For Update Profile We must check first if profile must be
+    //updated or create new one
+
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {
         //Update
         Profile.findOneAndUpdate(
           {
-            user: req.user.id //find to what user make updates
+            user: req.user.id //find to what user make updates (condition)!
           },
           { $set: profileFields },
+
           {
             new: true //true to return modified document
           }
@@ -178,7 +234,7 @@ router.post(
   (req, res) => {
     const { isValid, errors } = validateExperienceInput(req.body);
     if (!isValid) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
 
     Profile.findOne({ user: req.user.id })
@@ -197,9 +253,12 @@ router.post(
         //Add experience to array.We are using unshift() to put in the biggining of array.
 
         profile.experience.unshift(newExp);
-        profile.save().then(profile => {
-          res.json(profile);
-        });
+        profile
+          .save()
+          .then(profile => {
+            res.json(profile);
+          })
+          .catch(err => res.status(400).json(err));
       });
   }
 );
@@ -213,7 +272,7 @@ router.post(
   (req, res) => {
     const { isValid, errors } = validateEducationInput(req.body);
     if (!isValid) {
-      res.status(400).json(errors);
+      return res.status(400).json(errors);
     }
 
     Profile.findOne({ user: req.user.id })
@@ -232,29 +291,31 @@ router.post(
         //Add education to array.We are using unshift() to put in the biggining of array.
 
         profile.education.unshift(newEdu);
-        profile.save().then(profile => {
-          res.json(profile);
-        });
+        profile
+          .save()
+          .then(profile => {
+            res.json(profile);
+          })
+          .catch(err => res.status(400).json(err));
       });
   }
 );
 
-// @ Route DELETE   api/profile/exp/:exp_id
+// @ Route DELETE   api/profile/exp/:exp
 // @ Desc deletes from profile experience
 // @ Access Private
 
 router.delete(
-  "/exp/:exp_id",
+  "/exp/:exp",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("deleting...");
-
     Profile.findOne({ user: req.user.id })
       .then(profile => {
         //Get remove index
         const removeIndex = profile.experience
           .map(item => item.id)
-          .indexOf(req.params.exp_id);
+          .indexOf(req.params.exp);
+
         //Splice out item
 
         profile.experience.splice(removeIndex, 1);
@@ -263,12 +324,12 @@ router.delete(
       .catch(err => res.json(err));
   }
 );
-// @ Route DELETE   api/profile/edu/:exp_id
+// @ Route DELETE   api/profile/edu/:edu
 // @ Desc deletes from profile education
 // @ Access Private
 
 router.delete(
-  "/edu/:edu_id",
+  "/edu/:edu",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     console.log("deleting...");
@@ -278,7 +339,8 @@ router.delete(
         //Get remove index
         const removeIndex = profile.education
           .map(item => item.id)
-          .indexOf(req.params.exp_id);
+          .indexOf(req.params.edu);
+
         //Splice out item
 
         profile.education.splice(removeIndex, 1);
@@ -300,6 +362,21 @@ router.delete(
         res.json({ success: true });
       });
     });
+  }
+);
+// @ Route DELETE   api/profile/delete/:delete_id
+// @ Desc deletes Profile by id
+// @ Access Private
+
+router.delete(
+  "/delete_profile/:_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id })
+      .then(() => {
+        res.json({ msg: "Your Profile was successfully deleted." });
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 

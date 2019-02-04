@@ -4,23 +4,30 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import { logoutUser } from "../../actions/authAction";
+import { clearCurrentProfile } from "../../actions/profileAction";
 
 class Header extends Component {
   //Logout User
   logoutUser = e => {
     e.preventDefault();
     this.props.logoutUser();
+    this.props.clearCurrentProfile();
   };
 
   render() {
-    console.log(this.props);
     const { user, authenticated } = this.props.auth;
 
     const authLinks = (
       <ul className="navbar-nav ml-auto mt-2 mt-lg-0 ">
         <li className="nav-item">
           <Link to="/register" className="nav-link">
-            user
+            <img
+              src={user.avatar}
+              alt={user.name}
+              style={{ width: "25px" }}
+              className="rounded-circle mr-2"
+            />
+            {user.name}
           </Link>
         </li>
         <li className="nav-item">
@@ -50,7 +57,7 @@ class Header extends Component {
     );
 
     return (
-      <div className="pos-f-t">
+      <div className="pos-f-t mb-3">
         <nav className="navbar  navbar-dark bg-dark py-0">
           <Link to="/">
             <span className="navbar-brand">DevConnector</span>
@@ -59,8 +66,18 @@ class Header extends Component {
           <nav className="navbar navbar-expand-lg mr-auto ">
             <ul className="navbar-nav mr-auto mt-2 mt-lg-0 ">
               <li className="nav-item">
-                <Link to="/" className="nav-link">
+                <Link to="/developers" className="nav-link">
                   Developers
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/dashboard" className="nav-link">
+                  Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/grid" className="nav-link">
+                  Grid
                 </Link>
               </li>
             </ul>
@@ -93,13 +110,13 @@ class Header extends Component {
   }
 }
 Header.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  logoutUser: PropTypes.func.isRequired
 };
 const mapStateToProps = state => ({
   auth: state.auth
-  // authenticated: state.auth
 });
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(Header);

@@ -1,7 +1,28 @@
 .landing {
   background-image: url("./imgs/workstation.jpg");
+}
+.main_height {
   height: 900px;
 }
-.register {
-  height: 900px;
+
+tr {
+  line-height: 1em;
+}
+
+.col {
+  border: 1px solid black;
+}
+.row {
+  padding-bottom: 3px;
+}
+li.borderless,
+ul.borderless {
+  border-top: 0 none;
+}
+li.line_height {
+  line-height: 0.5;
+}
+.table td,
+.table th {
+  padding: 0.75rem 0.3rem 0.75rem 0.3rem;
 }

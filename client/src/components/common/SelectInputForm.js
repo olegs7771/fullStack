@@ -2,45 +2,54 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const TextInputForm = ({
+const SelectInputForm = ({
   name,
-  lable,
-  type,
   value,
   placeholder,
   onChange,
-  info,
-  error
+  error,
+  options,
+  type
 }) => {
+  const selectOptions = options.map(option => (
+    <option key={option.label} value={option.value} defaultValue={option.value}>
+      {option.label}
+    </option>
+  ));
+
   return (
-    <div className="group-control mt-3 ">
-      <input
+    <div className="group-control mt-2 ">
+      <select
         type={type}
         className={classnames("form-control form-control-lg", {
           "is-invalid": error
         })}
         name={name}
         value={value}
-        placeholder={placeholder}
         onChange={onChange}
-      />
-      <small className="form-text text-muted">{info}</small>
+        placeholder={placeholder}
+      >
+        {selectOptions}
+      </select>
+
       {error && <div className="invalid-feedback">{error}</div>}
     </div>
   );
 };
 
-TextInputForm.defaultProps = {
-  type: "text"
-};
-TextInputForm.propTypes = {
+SelectInputForm.propTypes = {
   name: PropTypes.string.isRequired,
-  lable: PropTypes.string,
   type: PropTypes.string.isRequired,
-  placeholder: PropTypes.string,
+
   info: PropTypes.string,
   error: PropTypes.string,
-  disabled: PropTypes.string
+  disabled: PropTypes.string,
+
+  options: PropTypes.array.isRequired
 };
 
-export default TextInputForm;
+SelectInputForm.defaultProps = {
+  type: "text"
+};
+
+export default SelectInputForm;

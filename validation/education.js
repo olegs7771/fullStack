@@ -9,7 +9,6 @@ module.exports = function validateEducationInput(data) {
   data.from = !isEmpty(data.from) ? data.from : "";
 
   let errors = {};
-  console.log(data);
 
   //If Empty
 
