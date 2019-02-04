@@ -18,6 +18,8 @@ class Developers extends Component {
         errors: props.errors
       };
     }
+    console.log(state.errors);
+
     return null;
   }
 

@@ -10,7 +10,6 @@ class Profile extends Component {
       skills,
       company,
       location,
-
       avatar,
       userName
     } = this.props;

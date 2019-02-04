@@ -11,6 +11,7 @@ class MainProfile extends Component {
     const {
       avatar,
       user,
+
       handle,
       status,
       skills,

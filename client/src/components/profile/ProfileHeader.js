@@ -2,10 +2,15 @@ import React, { Component } from "react";
 import isEmpty from "../../validation/is_Empty";
 import { Link } from "react-router-dom";
 
+import { Link } from "react-router-dom";
+
 class ProfileHeader extends Component {
   render() {
+<<<<<<< HEAD
     console.log(this.props);
 
+=======
+>>>>>>> bc103b738398f71a9d778ee8af25951d9d6c2eac
     const {
       name,
       avatar,
