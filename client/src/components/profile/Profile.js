@@ -12,7 +12,6 @@ import PropTypes from "prop-types";
 class Profile extends Component {
   componentDidMount() {
     const { handle } = this.props.match.params;
-    console.log(handle);
 
     this.props.getProfileByHandle(handle);
   }
@@ -32,7 +31,9 @@ class Profile extends Component {
         company,
         website,
         bio,
-        location
+        location,
+        education,
+        experience
       } = this.props.profile.profile;
       const {
         youtube,
@@ -66,8 +67,12 @@ class Profile extends Component {
           />
 
           <ProfileAbout bio={bio} name={name} skills={skills} />
-          <ProfileCreds />
-          <ProfileGitHub />
+
+          <ProfileCreds experience={experience} education={education} />
+
+          {profile.githubusername ? (
+            <ProfileGitHub githubUser={profile.githubusername} />
+          ) : null}
         </div>
       );
     }

@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import isEmpty from "../../validation/is_Empty";
+
 import { Link } from "react-router-dom";
 
 class ProfileHeader extends Component {
   render() {
-    console.log(this.props);
-
     const {
       name,
       avatar,

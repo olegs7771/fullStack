@@ -9,8 +9,6 @@ class MainProfile extends Component {
 
   render() {
     const {
-      avatar,
-      user,
       handle,
       status,
       skills,

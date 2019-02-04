@@ -61,7 +61,9 @@ class AddExperience extends Component {
     e.preventDefault();
     const newExp = {
       title: this.state.title,
+
       company: this.state.company,
+      location: this.state.location,
       from: this.state.from,
       to: this.state.to,
       description: this.state.description
