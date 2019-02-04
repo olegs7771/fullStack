@@ -4,6 +4,7 @@ const passport = require("passport");
 const Profile = require("../../models/Profile");
 const Users = require("../../models/User");
 //Load Validation
+const isEmpty = require("../../validation/is_empty");
 
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
@@ -110,71 +111,88 @@ router.post(
 
       return res.status(400).json(errors);
     }
-    // // Get fields
+
+    // Get fields (required fields)!!!
     const profileFields = {};
     profileFields.user = req.user.id; //<---logged in user
     if (req.body.handle) profileFields.handle = req.body.handle; //checking if req.body.handle came from form
-    if (req.body.handle) profileFields.handle = req.body.handle;
-
-    ///company
-    if (req.body.company) {
-      if (req.body.company.length == 0) {
-        profileFields.company = "";
-      } else {
-        profileFields.company = req.body.company;
-      }
-    }
-    //website
-    if (req.body.website) {
-      if (req.body.website.length == 0) {
-        profileFields.website = "";
-      } else {
-        profileFields.website = req.body.website;
-      }
-    }
-
-    ///location
-    if (req.body.location) {
-      if (req.body.location.length == 0) {
-        profileFields.location = "";
-      } else {
-        profileFields.location = req.body.location;
-      }
-    }
 
     if (req.body.status) profileFields.status = req.body.status;
+
     //Skills we split into array(cause it came as comma separated value)
     if (typeof req.body.skills !== "undefined") {
       profileFields.skills = req.body.skills.split(",");
     }
 
+    // not required fields!!!
+
+    ///company
+    if (isEmpty(req.body.company)) {
+      profileFields.company = "";
+    } else {
+      profileFields.company = req.body.company;
+    }
+    ///website
+    if (isEmpty(req.body.website)) {
+      profileFields.website = "";
+    } else {
+      profileFields.website = req.body.website;
+    }
+    ///location
+    if (isEmpty(req.body.location)) {
+      profileFields.location = "";
+    } else {
+      profileFields.location = req.body.location;
+    }
     ///bio
-    if (req.body.bio) {
-      if (req.body.bio.length == 0) {
-        profileFields.bio = "";
-      } else {
-        profileFields.bio = req.body.bio;
-      }
+    if (isEmpty(req.body.bio)) {
+      profileFields.bio = "";
+    } else {
+      profileFields.bio = req.body.bio;
     }
     ///GitHub username
-    if (req.body.githubusername) {
-      if (req.body.githubusername.length == 0) {
-        profileFields.githubusername = "";
-      } else {
-        profileFields.githubusername = req.body.githubusername;
-      }
+    if (isEmpty(req.body.githubusername)) {
+      profileFields.githubusername = "";
+    } else {
+      profileFields.githubusername = req.body.githubusername;
     }
 
     //Social has its own object
     profileFields.social = {};
-    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-    if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
-    // //For Update Profile We must check first if profile must be
-    // //updated or create new one
+    if (req.body.youtube) {
+      profileFields.social.youtube = req.body.youtube;
+    } else {
+      profileFields.social.youtube = "";
+    }
+    if (req.body.twitter) {
+      profileFields.social.twitter = req.body.twitter;
+    } else {
+      profileFields.social.twitter = "";
+    }
+    if (req.body.linkedin) {
+      profileFields.social.linkedin = req.body.linkedin;
+    } else {
+      profileFields.social.linkedin = "";
+    }
+    if (req.body.facebook) {
+      profileFields.social.facebook = req.body.facebook;
+    } else {
+      profileFields.social.facebook = "";
+    }
+    if (req.body.youtube) {
+      profileFields.social.youtube = req.body.youtube;
+    } else {
+      profileFields.social.youtube = "";
+    }
+    if (req.body.instagram) {
+      profileFields.social.instagram = req.body.instagram;
+    } else {
+      profileFields.social.instagram = "";
+    }
+
+    //For Update Profile We must check first if profile must be
+    //updated or create new one
+
     Profile.findOne({ user: req.user.id }).then(profile => {
       if (profile) {
         //Update

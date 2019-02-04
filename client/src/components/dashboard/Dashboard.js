@@ -10,6 +10,7 @@ import ProfileActions from "./ProfileActions";
 import MainProfile from "./MainProfile";
 import ExperienceProfile from "./ExperienceProfile";
 import EducationProfile from "./EducationProfile";
+import isEmpty from "../../validation/is_Empty";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -38,6 +39,8 @@ class Dashboard extends Component {
       if (Object.keys(profile).length > 0) {
         //user has profile
 
+        console.log(profile.social);
+
         dashboardContent = (
           <div className="mt-3">
             <h4 className="text-muted">
@@ -57,13 +60,12 @@ class Dashboard extends Component {
                   avatar={profile.user.avatar}
                   user={profile.user.name}
                   handle={profile.handle}
-                  profStatus={profile.status}
-                  skills={profile.skills}
+                  status={profile.status}
+                  skills={profile.skills.join(",")}
                   company={profile.company}
                   website={profile.website}
                   location={profile.location}
-                  githubusername={profile.githubusername}
-                  _id={profile._id}
+                  github={profile.githubusername}
                   facebook={profile.social.facebook}
                   twitter={profile.social.twitter}
                   youtube={profile.social.youtube}

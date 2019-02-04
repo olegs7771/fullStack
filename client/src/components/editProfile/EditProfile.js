@@ -7,6 +7,7 @@ import SelectInputForm from "../common/SelectInputForm";
 import InputSocilaForm from "../common/InputSocilaForm";
 import isEmpty from "../../validation/is_Empty";
 import PropTypes from "prop-types";
+
 import {
   registerCurrentProfile,
   getCurrentProfile
@@ -16,6 +17,7 @@ class EditProfile extends Component {
   state = {
     displaySocialInput: false,
     user: {},
+    social: {},
 
     handle: "",
     company: "",
@@ -30,7 +32,6 @@ class EditProfile extends Component {
     linkedin: "",
     youtube: "",
     instagram: "",
-
     errors: {}
   };
 
@@ -41,6 +42,8 @@ class EditProfile extends Component {
   };
 
   static getDerivedStateFromProps(props, state) {
+    console.log(props);
+
     if (props.errors !== state.errors || props.auth.user !== state.user) {
       return {
         errors: props.errors,
@@ -52,11 +55,17 @@ class EditProfile extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(prevProps.profile.social);
-
     if (this.props.profile.profile !== prevProps.profile.profile) {
       let skillsCSV = this.props.profile.profile.skills.join(",");
       const profile = this.props.profile.profile;
+
+      const {
+        facebook,
+        instagram,
+        linkedin,
+        twitter,
+        youtube
+      } = this.props.profile.profile.social;
 
       this.setState({
         handle: this.props.profile.profile.handle,
@@ -67,11 +76,11 @@ class EditProfile extends Component {
         location: profile.location,
         githubusername: profile.githubusername,
         bio: profile.bio,
-        //social
-        twitter: profile.social.twitter,
-        facebook: profile.social.facebook,
-        youtube: profile.social.youtube,
-        linkedin: profile.social.linkedin
+        facebook,
+        instagram,
+        linkedin,
+        youtube,
+        twitter
       });
     }
   }
@@ -85,6 +94,8 @@ class EditProfile extends Component {
 
   registerFormSubmit = e => {
     e.preventDefault();
+    console.log(this.props.profile.profile.social);
+
     const {
       handle,
       company,
@@ -94,14 +105,15 @@ class EditProfile extends Component {
       skills,
       githubusername,
       bio,
-      twitter,
       facebook,
-      linkedin,
+      twitter,
       youtube,
+      linkedin,
       instagram
     } = this.state;
 
     let companyEmty = !isEmpty(company) ? company : "";
+    let twitterEmpty = !isEmpty(twitter) ? twitter : "";
 
     const newProfile = {
       handle,
@@ -112,14 +124,14 @@ class EditProfile extends Component {
       skills,
       githubusername,
       bio,
-      twitter,
+      twitter: twitterEmpty,
       facebook,
       linkedin,
       youtube,
       instagram
     };
 
-    console.log(this.state);
+    console.log(newProfile);
 
     this.props.registerCurrentProfile(newProfile, this.props.history);
   };
@@ -162,11 +174,8 @@ class EditProfile extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-12 mx-auto">
-              <div className="display-4 text-center">Create Profile</div>
-              <p>
-                Dear {user.name} ,you can create a new profile by filling up
-                those form fields.
-              </p>
+              <div className="display-4 text-center">Edit Profile</div>
+              <p>Dear {user.name} ,here you can edit profile.</p>
               <small className=" d-block pb-3">* = required fields</small>
               <div className="card">
                 <div className="card-body">

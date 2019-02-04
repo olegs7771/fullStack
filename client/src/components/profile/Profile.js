@@ -22,15 +22,50 @@ class Profile extends Component {
 
     if (profile === null || loading) {
       //still no profile and loading state true;
-      let profileContent;
+
       return <Spinner />;
     } else {
-      //loading became false in state while profile loaded up
+      // loading became false in state while profile loaded up
+      const {
+        skills,
+        status,
+        company,
+        website,
+        bio,
+        location
+      } = this.props.profile.profile;
+      const {
+        youtube,
+        twitter,
+        facebook,
+        instagram,
+        linkedin
+      } = this.props.profile.profile.social;
+      const { name, avatar } = this.props.profile.profile.user;
 
       return (
         <div>
-          <ProfileHeader />
-          <ProfileAbout />
+          <Link to="/developers">
+            <i className="fas fa-arrow-left mr-2 btn  btn-info" />
+            Back To Profiles
+          </Link>
+          <br />
+          <br />
+          <ProfileHeader
+            name={name}
+            avatar={avatar}
+            company={company}
+            location={location}
+            status={status}
+            website={website}
+            youtube={youtube}
+            twitter={twitter}
+            facebook={facebook}
+            instagram={instagram}
+            linkedin={linkedin}
+          />
+
+          <ProfileAbout bio={bio} name={name} skills={skills} />
           <ProfileCreds />
           <ProfileGitHub />
         </div>
