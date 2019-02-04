@@ -32,12 +32,9 @@ class Profile extends Component {
         website,
         bio,
 
-      
-
         location,
         education,
         experience
-
       } = this.props.profile.profile;
       const {
         youtube,
@@ -71,17 +68,15 @@ class Profile extends Component {
           />
 
           <ProfileAbout bio={bio} name={name} skills={skills} />
-<<<<<<< HEAD
+
           <ProfileCreds />
           <ProfileGitHub />
-=======
 
           <ProfileCreds experience={experience} education={education} />
 
           {profile.githubusername ? (
             <ProfileGitHub githubUser={profile.githubusername} />
           ) : null}
->>>>>>> bc103b738398f71a9d778ee8af25951d9d6c2eac
         </div>
       );
     }
