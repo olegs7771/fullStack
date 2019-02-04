@@ -5,7 +5,7 @@ import { userIsAuthenticated, userIsNotAuthenticated } from "./authWrapper";
 import jwt_decode from "jwt-decode"; //decode token
 import setAuthToken from "./utils/setAuthToken"; // setting  token to header as Authorization( like in postman)
 import { setCurrentUser } from "./actions/authAction"; //will send action to set state auth.user:{}
-// import { clearCurrentProfile } from "./actions/profileAction";
+import { clearCurrentProfile } from "./actions/profileAction";
 
 //redux
 import { Provider } from "react-redux";
@@ -39,7 +39,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     //logout user
-    // store.dispatch(clearCurrentProfile());
+    store.dispatch(clearCurrentProfile());
 
     localStorage.removeItem("jwtToken");
   }
