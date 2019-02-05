@@ -12,17 +12,6 @@ class Developers extends Component {
     profiles: null
   };
 
-  static getDerivedStateFromProps(props, state) {
-    if (props.errors !== state.errors) {
-      return {
-        errors: props.errors
-      };
-    }
-    console.log(state.errors);
-
-    return null;
-  }
-
   componentDidMount() {
     this.props.getAllProfiles();
   }

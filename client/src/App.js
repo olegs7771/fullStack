@@ -89,11 +89,7 @@ class App extends Component {
                 <Route exact path="/developers" component={Developers} />
                 <Route exact path="/grid" component={Grid} />
                 <Route exact path="/profile/:handle" component={Profile} />
-                <Route
-                  exact
-                  path="/components/not_found"
-                  component={NotFound}
-                />
+                <Route exact path="/not_found" component={NotFound} />
               </Switch>
             </div>
             <Footer />
