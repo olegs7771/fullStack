@@ -65,9 +65,12 @@ router.post(
       name: req.user.name,
       avatar: req.user.avatar
     });
-    newPost.save().then(post => {
-      res.json(post);
-    });
+    newPost
+      .save()
+      .then(post => {
+        res.json(post);
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 

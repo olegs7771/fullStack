@@ -76,8 +76,8 @@ class Header extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/grid" className="nav-link">
-                  Grid
+                <Link to="/feed" className="nav-link">
+                  Post Feed
                 </Link>
               </li>
             </ul>

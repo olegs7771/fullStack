@@ -23,7 +23,8 @@ import AddEducation from "./components/addCredentials/AddEducation";
 import Developers from "./components/developers/Developers";
 import Profile from "./components/profile/Profile";
 import NotFound from "./components/notFound/NotFound";
-import Grid from "./components/Grid";
+//Posts
+import Posts from "./components/posts/Posts";
 
 import "./App.css";
 
@@ -86,8 +87,13 @@ class App extends Component {
                   path="/edit-edu"
                   component={userIsAuthenticated(AddEducation)}
                 />
+                <Route
+                  exact
+                  path="/feed"
+                  component={userIsAuthenticated(Posts)}
+                />
                 <Route exact path="/developers" component={Developers} />
-                <Route exact path="/grid" component={Grid} />
+
                 <Route exact path="/profile/:handle" component={Profile} />
                 <Route exact path="/not_found" component={NotFound} />
               </Switch>
