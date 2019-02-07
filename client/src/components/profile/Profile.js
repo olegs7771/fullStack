@@ -10,13 +10,36 @@ import { getProfileByHandle } from "../../actions/profileAction";
 import PropTypes from "prop-types";
 
 class Profile extends Component {
+  state = {
+    errors: {},
+    profile: {}
+  };
+
+  static getDerivedStateFromProps(props, state) {
+    if (
+      state.errors !== props.errors ||
+      state.profile !== props.profile.profile
+    ) {
+      return {
+        errors: props.errors,
+        profile: props.profile.profile
+      };
+    }
+    if (state.profile === null) {
+      props.history.push("/not_found");
+    }
+
+    return null;
+  }
+
   componentDidMount() {
     const { handle } = this.props.match.params;
-
     this.props.getProfileByHandle(handle);
   }
 
   render() {
+    console.log(this.state);
+
     const { profile, loading } = this.props.profile;
 
     if (profile === null || loading) {
@@ -85,7 +108,8 @@ Profile.propTypes = {
 };
 
 const mapStateToProp = state => ({
-  profile: state.profile
+  profile: state.profile,
+  errors: state.errors
 });
 
 export default connect(
