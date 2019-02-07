@@ -19,18 +19,10 @@ class PostForm extends Component {
   };
 
   handleAddPost = e => {
-    const { name, avatar } = this.props.auth.user;
     const { text } = this.state;
 
-    // const text = !isEmpty(this.state.text) ? this.state.text : "";
-    // this.setState({
-    //   text
-    // });
-
     const newPost = {
-      text,
-      name,
-      avatar
+      text
     };
     this.props.addPost(newPost, this.props.history);
     console.log(newPost);

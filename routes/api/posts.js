@@ -40,7 +40,8 @@ router.get("/", (req, res) => {
     .sort({ date: -1 })
     .then(posts => {
       res.json(posts);
-    });
+    })
+    .catch(err => status(400).json(err));
 });
 
 // @route POST api/posts/newpost

@@ -10,7 +10,7 @@ import {
 
 // Add Post
 
-export const addPost = (newPost, history) => dispatch => {
+export const addPost = newPost => dispatch => {
   axios
     .post("/api/posts/newpost", newPost)
     .then(res => {
@@ -19,7 +19,29 @@ export const addPost = (newPost, history) => dispatch => {
         payload: res.data
       });
     })
-    .then(() => history.push("/post_success"))
+
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+// Get  Posts
+
+export const getPosts = () => dispatch => {
+  dispatch({
+    type: POST_LOADING
+  });
+  axios
+    .get("/api/posts")
+    .then(res => {
+      dispatch({
+        type: GET_POSTS,
+        payload: res.data
+      });
+    })
+
     .catch(err => {
       dispatch({
         type: GET_ERRORS,
