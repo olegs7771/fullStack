@@ -10,7 +10,7 @@ import {
 
 // Add Post
 
-export const addPost = newPost => dispatch => {
+export const addPost = (newPost, history) => dispatch => {
   axios
     .post("/api/posts/newpost", newPost)
     .then(res => {
@@ -19,6 +19,7 @@ export const addPost = newPost => dispatch => {
         payload: res.data
       });
     })
+    .then(() => history.push("/post_success"))
     .catch(err => {
       dispatch({
         type: GET_ERRORS,

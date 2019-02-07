@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import TextAreaForm from "../common/TextAreaForm";
 import PropTypes from "prop-types";
 import { addPost } from "../../actions/postAction";
+import isEmpty from "../../validation/is_Empty";
 
 class PostForm extends Component {
   state = {
@@ -17,11 +19,21 @@ class PostForm extends Component {
   };
 
   handleAddPost = e => {
-    console.log("posted");
+    const { name, avatar } = this.props.auth.user;
+    const { text } = this.state;
 
-    e.preventDefault();
-    const newPost = {};
-    this.props.addPost(newPost);
+    // const text = !isEmpty(this.state.text) ? this.state.text : "";
+    // this.setState({
+    //   text
+    // });
+
+    const newPost = {
+      text,
+      name,
+      avatar
+    };
+    this.props.addPost(newPost, this.props.history);
+    console.log(newPost);
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -60,10 +72,11 @@ class PostForm extends Component {
 
 const mapStateToProps = state => ({
   post: state.post,
-  errors: state.errors
+  errors: state.errors,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
   { addPost }
-)(PostForm);
+)(withRouter(PostForm));
