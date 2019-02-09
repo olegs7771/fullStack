@@ -6,7 +6,7 @@ const locationHelper = locationHelperBuilder({});
 
 export const userIsAuthenticated = connectedRouterRedirect({
   // The url to redirect user to if they fail
-  redirectPath: "/main",
+  redirectPath: "/login",
   // If selector is true, wrapper will not redirect
   // For example let's check that state contains user data
   authenticatedSelector: state => state.auth.authenticated === true,

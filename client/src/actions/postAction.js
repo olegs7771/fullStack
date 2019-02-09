@@ -30,9 +30,7 @@ export const addPost = newPost => dispatch => {
 // Get  Posts
 
 export const getPosts = () => dispatch => {
-  dispatch({
-    type: POST_LOADING
-  });
+  dispatch(setPostLoading());
   axios
     .get("/api/posts")
     .then(res => {
@@ -44,8 +42,14 @@ export const getPosts = () => dispatch => {
 
     .catch(err => {
       dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
+        type: GET_POSTS,
+        payload: null
       });
     });
+};
+//set post loading state
+export const setPostLoading = () => {
+  return {
+    type: POST_LOADING
+  };
 };

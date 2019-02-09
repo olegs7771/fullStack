@@ -40,7 +40,8 @@ class PostForm extends Component {
   render() {
     const { text, errors } = this.state;
     return (
-      <div>
+      <div className="my-2">
+        <div className="text-center h4">Compose Post</div>
         <TextAreaForm
           name="text"
           value={text}
