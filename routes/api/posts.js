@@ -85,6 +85,7 @@ router.delete(
           //Check for post owner
 
           if (post.user.toString() !== req.user.id) {
+            //post user !== auth user
             return res
               .status(401)
               .json({ notauthorized: "User not authorized" });
@@ -95,7 +96,7 @@ router.delete(
             .catch(err => res.status(404).json({ msg: "Post not found" }));
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => res.status(400).json(err)); //user:not match from header Authorization
   }
 );
 

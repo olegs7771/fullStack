@@ -20,7 +20,7 @@ class Posts extends Component {
     if (posts === null && loading) {
       postContent = <Spinner />;
     } else {
-      // {posts state got posts from axios}
+      // {posts state got posts from db}
       postContent = <PostFeed posts={posts} />;
     }
     return (
