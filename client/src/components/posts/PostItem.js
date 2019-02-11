@@ -3,11 +3,16 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { deletePost } from "../../actions/postAction";
+import { deletePost, addLike } from "../../actions/postAction";
 
 class PostItem extends Component {
   handleDeletePost = id => {
     this.props.deletePost(id);
+  };
+
+  //Add Like
+  handleAddLike = id => {
+    this.props.addLike(id);
   };
 
   render() {
@@ -37,18 +42,21 @@ class PostItem extends Component {
             <div className="card-text">{post.text}</div>
           </div>
           <div className="button-group">
-            <button className="btn btn-light mr-1">
+            <button
+              className="btn btn-light mr-1"
+              onClick={this.handleAddLike.bind(this, auth.user.id)}
+            >
               <i className="fas fa-thumbs-up text-info " />
               <span className="badge badge-light">{post.likes.length}</span>
             </button>
             <button className="btn btn-light">
               <i className="fas fa-thumbs-down " />
             </button>
-            <a href="/comment">
+            <Link to={`/post/${post._id}`}>
               <button className="btn btn-dark ml-1">
                 <span className="text-white">Comments</span>
               </button>
-            </a>
+            </Link>
             {post.user === auth.user.id ? (
               <button className="btn btn-danger ml-1">
                 <span
@@ -73,5 +81,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { deletePost }
+  { deletePost, addLike }
 )(PostItem);

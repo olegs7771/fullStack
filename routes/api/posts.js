@@ -145,9 +145,15 @@ router.post(
     Profile.findOne({ user: req.user.id })
 
       .then(profile => {
-        Post.findById(req.params.id).then(post => {
+        console.log("user id avatar---" + req.user.id);
+        console.log("params is (user)---" + req.params.id);
+        Post.findOne({ user: req.params.id }).then(post => {
+          console.log(post.likes.length);
+          console.log(post);
+
           //we gonna check if user already liked this post
           //we gonna use filter method
+
           if (
             post.likes.filter(like => like.user.toString() === req.user.id)
               .length > 0
@@ -163,7 +169,7 @@ router.post(
           post.save().then(post => res.json(post));
         });
       })
-      .catch(err => res.json({ msg: "Profile not found" }));
+      .catch(err => res.status(404).json({ msg: "Profile not found" }));
   }
 );
 // @route POST api/posts/comment/:id   (this is post id)

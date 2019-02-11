@@ -2,8 +2,7 @@ import {
   POST_LOADING,
   GET_POSTS,
   ADD_POST,
-  DELETE_POST,
-  GET_ERRORS
+  DELETE_POST
 } from "../actions/types";
 
 const initialState = {

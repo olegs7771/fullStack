@@ -27,6 +27,22 @@ export const addPost = newPost => dispatch => {
       });
     });
 };
+// Add Like
+
+export const addLike = id => dispatch => {
+  axios
+    .post(`api/posts/like/${id}`)
+    .then(res => {
+      dispatch(getPosts());
+    })
+
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 // Get  Posts
 
 export const getPosts = () => dispatch => {
