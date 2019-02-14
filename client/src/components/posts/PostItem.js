@@ -18,6 +18,14 @@ class PostItem extends Component {
   handleRemoveLike = id => {
     this.props.removeLike(id);
   };
+  findUserLike(likes) {
+    const { auth } = this.props;
+    if (likes.filter(like => like.user === auth.user.id).length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   render() {
     console.log("render");
@@ -50,7 +58,11 @@ class PostItem extends Component {
               className="btn btn-light mr-1"
               onClick={this.handleAddLike.bind(this, post._id)}
             >
-              <i className="fas fa-thumbs-up text-info " />
+              <i
+                className={classnames("fas fa-thumbs-up", {
+                  "text-info": this.findUserLike(post.likes)
+                })}
+              />
               <span className="badge badge-light">{post.likes.length}</span>
             </button>
             <button
