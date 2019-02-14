@@ -3,7 +3,7 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { deletePost, addLike } from "../../actions/postAction";
+import { deletePost, addLike, removeLike } from "../../actions/postAction";
 
 class PostItem extends Component {
   handleDeletePost = id => {
@@ -13,6 +13,10 @@ class PostItem extends Component {
   //Add Like
   handleAddLike = id => {
     this.props.addLike(id);
+  };
+  //Remove Like
+  handleRemoveLike = id => {
+    this.props.removeLike(id);
   };
 
   render() {
@@ -44,12 +48,15 @@ class PostItem extends Component {
           <div className="button-group">
             <button
               className="btn btn-light mr-1"
-              onClick={this.handleAddLike.bind(this, auth.user.id)}
+              onClick={this.handleAddLike.bind(this, post._id)}
             >
               <i className="fas fa-thumbs-up text-info " />
               <span className="badge badge-light">{post.likes.length}</span>
             </button>
-            <button className="btn btn-light">
+            <button
+              className="btn btn-light"
+              onClick={this.handleRemoveLike.bind(this, post._id)}
+            >
               <i className="fas fa-thumbs-down " />
             </button>
             <Link to={`/post/${post._id}`}>
@@ -81,5 +88,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { deletePost, addLike }
+  { deletePost, addLike, removeLike }
 )(PostItem);

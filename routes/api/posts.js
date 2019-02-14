@@ -145,12 +145,7 @@ router.post(
     Profile.findOne({ user: req.user.id })
 
       .then(profile => {
-        console.log("user id avatar---" + req.user.id);
-        console.log("params is (user)---" + req.params.id);
-        Post.findOne({ user: req.params.id }).then(post => {
-          console.log(post.likes.length);
-          console.log(post);
-
+        Post.findById(req.params.id).then(post => {
           //we gonna check if user already liked this post
           //we gonna use filter method
 
