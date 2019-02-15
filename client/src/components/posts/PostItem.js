@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+
 import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -18,7 +20,10 @@ class PostItem extends Component {
   render() {
     console.log("render");
 
-    const { post, auth } = this.props;
+    const { post, auth, errors } = this.props;
+    if (errors) {
+      console.log(errors);
+    }
 
     return (
       <div>
@@ -42,14 +47,25 @@ class PostItem extends Component {
             <div className="card-text">{post.text}</div>
           </div>
           <div className="button-group">
+            {/* {Add Like} */}
             <button
-              className="btn btn-light mr-1"
-              onClick={this.handleAddLike.bind(this, auth.user.id)}
+              className={classnames("btn btn-light mr-1", {
+                "btn btn-danger mr-1": errors
+              })}
+              onClick={this.handleAddLike.bind(this, post._id)}
             >
               <i className="fas fa-thumbs-up text-info " />
-              <span className="badge badge-light">{post.likes.length}</span>
+              <span
+                className={classnames("badge badge-light", {
+                  "is-invalid": errors
+                })}
+              >
+                {post.likes.length}
+              </span>
             </button>
+
             <button className="btn btn-light">
+              {/* {End Add Like} */}
               <i className="fas fa-thumbs-down " />
             </button>
             <Link to={`/post/${post._id}`}>
@@ -74,10 +90,16 @@ class PostItem extends Component {
   }
 }
 
-PostItem.propTypes = {};
+PostItem.propTypes = {
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired,
+  deletePost: PropTypes.func.isRequired,
+  addLike: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  errors: state.errors
 });
 export default connect(
   mapStateToProps,
