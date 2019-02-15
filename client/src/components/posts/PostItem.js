@@ -5,7 +5,7 @@ import classnames from "classnames";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
-import { deletePost, addLike } from "../../actions/postAction";
+import { deletePost, addLike, removeLike } from "../../actions/postAction";
 
 class PostItem extends Component {
   handleDeletePost = id => {
@@ -16,6 +16,18 @@ class PostItem extends Component {
   handleAddLike = id => {
     this.props.addLike(id);
   };
+  //Remove Like
+  handleRemoveLike = id => {
+    this.props.removeLike(id);
+  };
+  findUserLike(likes) {
+    const { auth } = this.props;
+    if (likes.filter(like => like.user === auth.user.id).length > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
   render() {
     console.log("render");
@@ -49,23 +61,20 @@ class PostItem extends Component {
           <div className="button-group">
             {/* {Add Like} */}
             <button
-              className={classnames("btn btn-light mr-1", {
-                "btn btn-danger mr-1": errors
-              })}
+              className="btn btn-light mr-1"
               onClick={this.handleAddLike.bind(this, post._id)}
             >
-              <i className="fas fa-thumbs-up text-info " />
-              <span
-                className={classnames("badge badge-light", {
-                  "is-invalid": errors
+              <i
+                className={classnames("fas fa-thumbs-up", {
+                  "text-info": this.findUserLike(post.likes)
                 })}
-              >
-                {post.likes.length}
-              </span>
+              />
+              <span className="badge badge-light">{post.likes.length}</span>
             </button>
-
-            <button className="btn btn-light">
-              {/* {End Add Like} */}
+            <button
+              className="btn btn-light"
+              onClick={this.handleRemoveLike.bind(this, post._id)}
+            >
               <i className="fas fa-thumbs-down " />
             </button>
             <Link to={`/post/${post._id}`}>
@@ -103,5 +112,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { deletePost, addLike }
+  { deletePost, addLike, removeLike }
 )(PostItem);

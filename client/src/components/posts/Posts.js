@@ -17,7 +17,7 @@ class Posts extends Component {
 
     let postContent;
 
-    if (posts === null && loading) {
+    if (posts === null || loading) {
       postContent = <Spinner />;
     } else {
       // {posts state got posts from db}

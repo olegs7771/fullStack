@@ -43,6 +43,22 @@ export const addLike = id => dispatch => {
       });
     });
 };
+// Remove Like
+
+export const removeLike = id => dispatch => {
+  axios
+    .post(`api/posts/dislike/${id}`)
+    .then(res => {
+      dispatch(getPosts());
+    })
+
+    .catch(err => {
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
 // Get  Posts
 
 export const getPosts = () => dispatch => {
