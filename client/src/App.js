@@ -25,6 +25,7 @@ import Profile from "./components/profile/Profile";
 import NotFound from "./components/notFound/NotFound";
 //Posts
 import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
 
 import "./App.css";
 
@@ -91,6 +92,11 @@ class App extends Component {
                   exact
                   path="/feed"
                   component={userIsAuthenticated(Posts)}
+                />
+                <Route
+                  exact
+                  path="/post/:id"
+                  component={userIsAuthenticated(Post)}
                 />
 
                 <Route exact path="/developers" component={Developers} />

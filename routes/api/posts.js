@@ -13,12 +13,10 @@ const validatePostInput = require("../../validation/post");
 router.get("/test", (req, res) => res.json({ msg: "this is posts" }));
 
 // @route GET api/posts/:id
-// @desc  Route to get sinle post by id
+// @desc  Route to get single post by id
 // @access Public
 
 router.get("/:id", (req, res) => {
-  console.log(req.params);
-
   Post.findById(req.params.id)
     .then(post => {
       if (!post) {
@@ -175,21 +173,22 @@ router.post(
   "/comment/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Post.findById(req.params.id).then(post => {
-      const newComment = {
-        text: req.body.text,
-        name: req.user.id,
-        avatar: req.user.avatar
-      };
-      console.log(newComment.text);
+    Post.findById(req.params.id)
+      .then(post => {
+        const newComment = {
+          text: req.body.text,
+          name: req.user.name,
+          avatar: req.user.avatar
+        };
 
-      if (post) {
-        post.comments.unshift(newComment);
-        post.save().then(comment => {
-          res.json(comment);
-        });
-      }
-    });
+        if (post) {
+          post.comments.unshift(newComment);
+          post.save().then(comment => {
+            res.json(comment);
+          });
+        }
+      })
+      .catch(err => status(400).json(err));
   }
 );
 // @route POST api/posts/uncomment/:id   (this is post id)

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { deletePost, addLike, removeLike } from "../../actions/postAction";
+import Post from "../post/Post";
 
 class PostItem extends Component {
   handleDeletePost = id => {
@@ -30,12 +31,7 @@ class PostItem extends Component {
   }
 
   render() {
-    console.log("render");
-
-    const { post, auth, errors } = this.props;
-    if (errors) {
-      console.log(errors);
-    }
+    const { post, auth, showActions } = this.props;
 
     return (
       <div>
@@ -58,50 +54,56 @@ class PostItem extends Component {
           <div className="card-body">
             <div className="card-text">{post.text}</div>
           </div>
-          <div className="button-group">
-            {/* {Add Like} */}
-            <button
-              className="btn btn-light mr-1"
-              onClick={this.handleAddLike.bind(this, post._id)}
-            >
-              <i
-                className={classnames("fas fa-thumbs-up", {
-                  "text-info": this.findUserLike(post.likes)
-                })}
-              />
-              <span className="badge badge-light">{post.likes.length}</span>
-            </button>
-            <button
-              className="btn btn-light"
-              onClick={this.handleRemoveLike.bind(this, post._id)}
-            >
-              <i className="fas fa-thumbs-down " />
-            </button>
-            <Link to={`/post/${post._id}`}>
-              <button className="btn btn-dark ml-1">
-                <span className="text-white">Comments</span>
+          {showActions ? (
+            <div className="button-group">
+              {/* {Add Like} */}
+              <button
+                className="btn btn-light mr-1"
+                onClick={this.handleAddLike.bind(this, post._id)}
+              >
+                <i
+                  className={classnames("fas fa-thumbs-up", {
+                    "text-info": this.findUserLike(post.likes)
+                  })}
+                />
+                <span className="badge badge-light">{post.likes.length}</span>
               </button>
-            </Link>
-            {post.user === auth.user.id ? (
-              <button className="btn btn-danger ml-1">
-                <span
-                  className="text-white"
-                  onClick={this.handleDeletePost.bind(this, post._id)}
-                >
-                  Delete
-                </span>
+              <button
+                className="btn btn-light"
+                onClick={this.handleRemoveLike.bind(this, post._id)}
+              >
+                <i className="fas fa-thumbs-down " />
               </button>
-            ) : null}
-          </div>
+              <Link to={`/post/${post._id}`}>
+                <button className="btn btn-dark ml-1">
+                  <span className="text-white">Comments</span>
+                </button>
+              </Link>
+              {post.user === auth.user.id ? (
+                <button className="btn btn-danger ml-1">
+                  <span
+                    className="text-white"
+                    onClick={this.handleDeletePost.bind(this, post._id)}
+                  >
+                    Delete
+                  </span>
+                </button>
+              ) : null}
+            </div>
+          ) : null}
         </div>
       </div>
     );
   }
 }
 
+PostItem.defaultProps = {
+  showActions: true
+};
+
 PostItem.propTypes = {
   auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
+  // errors: PropTypes.object.isRequired,
   deletePost: PropTypes.func.isRequired,
   addLike: PropTypes.func.isRequired
 };
