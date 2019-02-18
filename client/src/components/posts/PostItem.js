@@ -46,7 +46,7 @@ class PostItem extends Component {
               />
             </div>
             <div className="col-md-8 col-8">
-              <span className="text-info">{post.name}</span> commented on{" "}
+              <span className="text-info">{post.name}</span> posted on{" "}
               <Moment format="D MMM YYYY">{post.date}</Moment>
             </div>
           </div>

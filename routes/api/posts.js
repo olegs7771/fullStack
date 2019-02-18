@@ -5,6 +5,7 @@ const passport = require("passport");
 const Post = require("../../models/Post");
 const Profile = require("../../models/Profile");
 const validatePostInput = require("../../validation/post");
+const validateCommentInput = require("../../validation/comment");
 
 // @route GET api/posts
 // @desc  Test post route
@@ -173,6 +174,12 @@ router.post(
   "/comment/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    //Validation first line(from validation/comments)
+    const { errors, isValid } = validateCommentInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     Post.findById(req.params.id)
       .then(post => {
         const newComment = {
