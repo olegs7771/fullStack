@@ -1,4 +1,4 @@
-import { GET_ERRORS, SET_CURRENT_USER } from "./types";
+import { GET_ERRORS, SET_CURRENT_USER, CLEAR_CURRENT_USER } from "./types";
 import axios from "axios";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
@@ -49,8 +49,14 @@ export const setCurrentUser = decoded => {
     payload: decoded
   };
 };
+//clear current user
+export const clearCurrentUser = () => {
+  return {
+    type: CLEAR_CURRENT_USER
+  };
+};
 
-//Logut user
+//Logout user
 
 export const logoutUser = () => dispatch => {
   //Remove token from localStorage
