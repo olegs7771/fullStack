@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const passport = require("passport"); //authantication strategy
 
 //routes imports
 const users = require("./routes/api/users");
@@ -10,7 +11,6 @@ const posts = require("./routes/api/posts");
 const app = express();
 
 //Bring in body-parser
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -25,7 +25,9 @@ mongoose
   )
   .then(() => console.log("MongoDB connected"))
   .catch(err => console.log(err));
-app.get("/", (req, res) => res.send("Hello!"));
+
+// passport middleware
+app.use(passport.initialize());
 
 //routes
 app.use("/api/posts", posts);
