@@ -10,6 +10,7 @@ import ProfileActions from "./ProfileActions";
 import MainProfile from "./MainProfile";
 import ExperienceProfile from "./ExperienceProfile";
 import EducationProfile from "./EducationProfile";
+import isEmpty from "../../validation/is_Empty";
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -37,6 +38,8 @@ class Dashboard extends Component {
       //check for profile
       if (Object.keys(profile).length > 0) {
         //user has profile
+
+        console.log(profile.social);
 
         dashboardContent = (
           <div className="mt-3">

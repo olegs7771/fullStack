@@ -36,7 +36,6 @@ class ProfileHeader extends Component {
             </div>
             <div className="text-center">
               <p className=" text-center text-white h3">{name}'s profile</p>
-
               <p className="text-center text-white">
                 {!(status === "0") ? (
                   <span>
@@ -46,9 +45,7 @@ class ProfileHeader extends Component {
                   <span>Company {company}</span>
                 )}
               </p>
-
               <p className=" text-center text-white">{location}</p>
-
               {website ? (
                 <p className="text-center ">
                   <a
@@ -60,9 +57,7 @@ class ProfileHeader extends Component {
                   </a>
                 </p>
               ) : null}
-
               {/* {Social Links} */}
-
               <div className="text-center text-white d-inline-flex p-2">
                 {facebook ? (
                   <Link

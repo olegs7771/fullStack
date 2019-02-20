@@ -1,13 +1,13 @@
 const Validator = require("validator");
 const isEmpty = require("./is_empty");
 
-module.exports = function validatePostInput(data) {
+module.exports = function validateCommentInput(data) {
   //data.name can not be object!
   data.text = !isEmpty(data.text) ? data.text : "";
   let errors = {};
 
   if (data.text) {
-    if (!Validator.isLength(data.text, { min: 3, max: 200 })) {
+    if (!Validator.isLength(data.text, { min: 3, max: 300 })) {
       errors.text = "text must contain at least 3 characters";
     }
   }

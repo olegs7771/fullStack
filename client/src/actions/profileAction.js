@@ -56,12 +56,14 @@ export const setProfileLoading = () => {
     type: PROFILE_LOADING
   };
 };
+
 //Clear Profile
 export const clearCurrentProfile = () => {
   return {
     type: CLEAR_CURRENT_PROFILE
   };
 };
+
 //create or update current user profile
 
 export const registerCurrentProfile = (newProfile, history) => dispatch => {

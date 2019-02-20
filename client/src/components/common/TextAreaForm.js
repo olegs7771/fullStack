@@ -35,4 +35,8 @@ TextAreaForm.propTypes = {
   error: PropTypes.string
 };
 
+TextAreaForm.defaultProps = {
+  type: "text"
+};
+
 export default TextAreaForm;

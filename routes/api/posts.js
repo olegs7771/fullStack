@@ -5,6 +5,7 @@ const passport = require("passport");
 const Post = require("../../models/Post");
 const Profile = require("../../models/Profile");
 const validatePostInput = require("../../validation/post");
+const validateCommentInput = require("../../validation/comment");
 
 // @route GET api/posts
 // @desc  Test post route
@@ -13,12 +14,10 @@ const validatePostInput = require("../../validation/post");
 router.get("/test", (req, res) => res.json({ msg: "this is posts" }));
 
 // @route GET api/posts/:id
-// @desc  Route to get sinle post by id
+// @desc  Route to get single post by id
 // @access Public
 
 router.get("/:id", (req, res) => {
-  console.log(req.params);
-
   Post.findById(req.params.id)
     .then(post => {
       if (!post) {
@@ -40,7 +39,8 @@ router.get("/", (req, res) => {
     .sort({ date: -1 })
     .then(posts => {
       res.json(posts);
-    });
+    })
+    .catch(err => status(400).json(err));
 });
 
 // @route POST api/posts/newpost
@@ -65,9 +65,12 @@ router.post(
       name: req.user.name,
       avatar: req.user.avatar
     });
-    newPost.save().then(post => {
-      res.json(post);
-    });
+    newPost
+      .save()
+      .then(post => {
+        res.json(post);
+      })
+      .catch(err => res.status(400).json(err));
   }
 );
 
@@ -81,6 +84,7 @@ router.delete(
           //Check for post owner
 
           if (post.user.toString() !== req.user.id) {
+            //post user !== auth user
             return res
               .status(401)
               .json({ notauthorized: "User not authorized" });
@@ -91,7 +95,7 @@ router.delete(
             .catch(err => res.status(404).json({ msg: "Post not found" }));
         });
       })
-      .catch(err => console.log(err));
+      .catch(err => res.status(400).json(err)); //user:not match from header Authorization
   }
 );
 
@@ -143,6 +147,7 @@ router.post(
         Post.findById(req.params.id).then(post => {
           //we gonna check if user already liked this post
           //we gonna use filter method
+
           if (
             post.likes.filter(like => like.user.toString() === req.user.id)
               .length > 0
@@ -158,7 +163,7 @@ router.post(
           post.save().then(post => res.json(post));
         });
       })
-      .catch(err => res.json({ msg: "Profile not found" }));
+      .catch(err => res.status(404).json({ msg: "Profile not found" }));
   }
 );
 // @route POST api/posts/comment/:id   (this is post id)
@@ -169,21 +174,28 @@ router.post(
   "/comment/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Post.findById(req.params.id).then(post => {
-      const newComment = {
-        text: req.body.text,
-        name: req.user.id,
-        avatar: req.user.avatar
-      };
-      console.log(newComment.text);
+    //Validation first line(from validation/comments)
+    const { errors, isValid } = validateCommentInput(req.body);
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
 
-      if (post) {
-        post.comments.unshift(newComment);
-        post.save().then(comment => {
-          res.json(comment);
-        });
-      }
-    });
+    Post.findById(req.params.id)
+      .then(post => {
+        const newComment = {
+          text: req.body.text,
+          name: req.user.name,
+          avatar: req.user.avatar
+        };
+
+        if (post) {
+          post.comments.unshift(newComment);
+          post.save().then(comment => {
+            res.json(comment);
+          });
+        }
+      })
+      .catch(err => status(400).json(err));
   }
 );
 // @route POST api/posts/uncomment/:id   (this is post id)

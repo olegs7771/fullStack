@@ -1,4 +1,4 @@
-import { SET_CURRENT_USER } from "../actions/types";
+import { SET_CURRENT_USER, CLEAR_CURRENT_USER } from "../actions/types";
 import isEmpty from "../validation/is_Empty";
 
 const initialState = {
@@ -13,6 +13,11 @@ export default function(state = initialState, action) {
         ...state,
         authenticated: !isEmpty(action.payload),
         user: action.payload
+      };
+    case CLEAR_CURRENT_USER:
+      return {
+        ...state,
+        authenticated: false
       };
 
     default:

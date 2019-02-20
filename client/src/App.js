@@ -5,7 +5,7 @@ import { userIsAuthenticated, userIsNotAuthenticated } from "./authWrapper";
 import jwt_decode from "jwt-decode"; //decode token
 import setAuthToken from "./utils/setAuthToken"; // setting  token to header as Authorization( like in postman)
 import { setCurrentUser } from "./actions/authAction"; //will send action to set state auth.user:{}
-// import { clearCurrentProfile } from "./actions/profileAction";
+import { clearCurrentProfile } from "./actions/profileAction";
 
 //redux
 import { Provider } from "react-redux";
@@ -23,7 +23,9 @@ import AddEducation from "./components/addCredentials/AddEducation";
 import Developers from "./components/developers/Developers";
 import Profile from "./components/profile/Profile";
 import NotFound from "./components/notFound/NotFound";
-import Grid from "./components/Grid";
+//Posts
+import Posts from "./components/posts/Posts";
+import Post from "./components/post/Post";
 
 import "./App.css";
 
@@ -40,7 +42,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     //logout user
-    // store.dispatch(clearCurrentProfile());
+    store.dispatch(clearCurrentProfile());
 
     localStorage.removeItem("jwtToken");
   }
@@ -86,14 +88,21 @@ class App extends Component {
                   path="/edit-edu"
                   component={userIsAuthenticated(AddEducation)}
                 />
-                <Route exact path="/developers" component={Developers} />
-                <Route exact path="/grid" component={Grid} />
-                <Route exact path="/profile/:handle" component={Profile} />
                 <Route
                   exact
-                  path="/components/not_found"
-                  component={NotFound}
+                  path="/feed"
+                  component={userIsAuthenticated(Posts)}
                 />
+                <Route
+                  exact
+                  path="/post/:id"
+                  component={userIsAuthenticated(Post)}
+                />
+
+                <Route exact path="/developers" component={Developers} />
+
+                <Route exact path="/profile/:handle" component={Profile} />
+                <Route exact path="/not_found" component={NotFound} />
               </Switch>
             </div>
             <Footer />

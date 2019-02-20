@@ -6,7 +6,9 @@
     "axios": "^0.18.0",
     "classnames": "^2.2.6",
     "jwt-decode": "^2.2.0",
+    "memoize-one": "^5.0.0",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.23",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-moment": "^0.8.4",
@@ -25,7 +27,8 @@
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "secure": false
   },
   "browserslist": [
     ">0.2%",
