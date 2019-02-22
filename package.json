@@ -6,6 +6,10 @@
     "npm": "6.4.1"
   },
   "description": "Social Network For Developers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olegs7771/fullStack"
+  },
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
