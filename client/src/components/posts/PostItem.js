@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import Moment from "react-moment";
 import { deletePost, addLike, removeLike } from "../../actions/postAction";
-import Post from "../post/Post";
 
 class PostItem extends Component {
   handleDeletePost = id => {

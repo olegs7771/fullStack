@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+
 import PropTypes from "prop-types";
 
 class ProfileGitHub extends Component {
@@ -15,7 +15,7 @@ class ProfileGitHub extends Component {
   // componentDidUpdate() {}
 
   componentDidMount() {
-    const { clientId, clientSecret, count, sort, repos } = this.state;
+    const { clientId, clientSecret, count, sort } = this.state;
     const { githubUser } = this.props;
 
     //fetch from github using fetch()
@@ -40,7 +40,12 @@ class ProfileGitHub extends Component {
       <div key={repo.id} className="card card-body mb-3">
         <div className="row">
           <h4>
-            <a href={repo.html_url} className="text-info" target="_blank">
+            <a
+              href={repo.html_url}
+              className="text-info"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               {repo.name}
             </a>
           </h4>

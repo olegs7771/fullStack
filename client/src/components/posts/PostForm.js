@@ -2,9 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import TextAreaForm from "../common/TextAreaForm";
-import PropTypes from "prop-types";
+
 import { addPost } from "../../actions/postAction";
-import isEmpty from "../../validation/is_Empty";
 
 class PostForm extends Component {
   state = {

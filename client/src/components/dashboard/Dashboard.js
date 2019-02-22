@@ -10,7 +10,6 @@ import ProfileActions from "./ProfileActions";
 import MainProfile from "./MainProfile";
 import ExperienceProfile from "./ExperienceProfile";
 import EducationProfile from "./EducationProfile";
-import isEmpty from "../../validation/is_Empty";
 
 class Dashboard extends Component {
   componentDidMount() {
