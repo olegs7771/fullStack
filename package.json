@@ -17,6 +17,10 @@
   },
   "author": "Oleg",
   "license": "MIT",
+  "engines": {
+    "npm": "6.8.0",
+    "node": "10.15.1"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
